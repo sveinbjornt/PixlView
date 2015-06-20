@@ -12,8 +12,6 @@
 		F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3C1B348E4F005FAD6C /* Images.xcassets */; };
 		F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */; };
 		F4BECE4C1B348E50005FAD6C /* PixelViewerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */; };
-		F4BECE571B349A37005FAD6C /* PixelFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE561B349A37005FAD6C /* PixelFormat.m */; };
-		F4BECE5A1B35B1D5005FAD6C /* RGBPixelFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE591B35B1D5005FAD6C /* RGBPixelFormat.m */; };
 		F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE5C1B35B541005FAD6C /* GLPixelView.m */; };
 		F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE601B35B755005FAD6C /* CGPixelView.m */; };
 		F4BECE641B35C5B5005FAD6C /* BackingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE631B35C5B5005FAD6C /* BackingView.m */; };
@@ -41,10 +39,6 @@
 		F4BECE451B348E50005FAD6C /* PixelViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PixelViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BECE4A1B348E50005FAD6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PixelViewerTests.m; sourceTree = "<group>"; };
-		F4BECE551B349A37005FAD6C /* PixelFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelFormat.h; sourceTree = "<group>"; };
-		F4BECE561B349A37005FAD6C /* PixelFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelFormat.m; sourceTree = "<group>"; };
-		F4BECE581B35B1D5005FAD6C /* RGBPixelFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGBPixelFormat.h; sourceTree = "<group>"; };
-		F4BECE591B35B1D5005FAD6C /* RGBPixelFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGBPixelFormat.m; sourceTree = "<group>"; };
 		F4BECE5B1B35B541005FAD6C /* GLPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPixelView.h; sourceTree = "<group>"; };
 		F4BECE5C1B35B541005FAD6C /* GLPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPixelView.m; sourceTree = "<group>"; };
 		F4BECE5F1B35B755005FAD6C /* CGPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPixelView.h; sourceTree = "<group>"; };
@@ -96,13 +90,9 @@
 			children = (
 				F4BECE391B348E4F005FAD6C /* AppDelegate.h */,
 				F4BECE3A1B348E4F005FAD6C /* AppDelegate.m */,
-				F4BECE621B35C5B5005FAD6C /* BackingView.h */,
-				F4BECE631B35C5B5005FAD6C /* BackingView.m */,
-				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
-				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
-				F4BECE5F1B35B755005FAD6C /* CGPixelView.h */,
-				F4BECE601B35B755005FAD6C /* CGPixelView.m */,
-				F4BECE5E1B35B547005FAD6C /* Formats */,
+				F4BECE651B35D878005FAD6C /* PixelBuffer.h */,
+				F4BECE661B35D878005FAD6C /* PixelBuffer.m */,
+				F4BECE681B35E5B3005FAD6C /* Views */,
 				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
 				F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */,
 				F4BECE351B348E4F005FAD6C /* Supporting Files */,
@@ -136,17 +126,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F4BECE5E1B35B547005FAD6C /* Formats */ = {
+		F4BECE681B35E5B3005FAD6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F4BECE651B35D878005FAD6C /* PixelBuffer.h */,
-				F4BECE661B35D878005FAD6C /* PixelBuffer.m */,
-				F4BECE551B349A37005FAD6C /* PixelFormat.h */,
-				F4BECE561B349A37005FAD6C /* PixelFormat.m */,
-				F4BECE581B35B1D5005FAD6C /* RGBPixelFormat.h */,
-				F4BECE591B35B1D5005FAD6C /* RGBPixelFormat.m */,
+				F4BECE621B35C5B5005FAD6C /* BackingView.h */,
+				F4BECE631B35C5B5005FAD6C /* BackingView.m */,
+				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
+				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
+				F4BECE5F1B35B755005FAD6C /* CGPixelView.h */,
+				F4BECE601B35B755005FAD6C /* CGPixelView.m */,
 			);
-			name = Formats;
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,10 +238,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4BECE571B349A37005FAD6C /* PixelFormat.m in Sources */,
 				F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */,
 				F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */,
-				F4BECE5A1B35B1D5005FAD6C /* RGBPixelFormat.m in Sources */,
 				F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */,
 				F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */,
 				F4BECE381B348E4F005FAD6C /* main.m in Sources */,
