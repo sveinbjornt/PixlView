@@ -29,18 +29,18 @@
 - (void)reshape {
 //    [[self openGLContext] update];
 
-    [[self openGLContext] makeCurrentContext];
-    
-    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    // Use OS X style coordinates, 0,0 is bottom left
-    glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+//    [[self openGLContext] makeCurrentContext];
+//    
+//    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+//    
+//    glMatrixMode(GL_PROJECTION);
+//    glLoadIdentity();
+//    
+//    // Use OS X style coordinates, 0,0 is bottom left
+//    glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
+//    
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
 
 
 }
@@ -60,7 +60,7 @@
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    // Use OS X style coordinates, 0,0 is bottom left
+    // x=0,y=0 is top left
     glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
     
     glMatrixMode(GL_MODELVIEW);
@@ -70,29 +70,31 @@
     
     [self drawPixelData];
     
+    glFlush();
     [[self openGLContext] flushBuffer];
 }
 
 - (void)drawPixelData {
     
-    NSData *data = self.pixelData;
-    if (!data) {
+    
+    if (!self.pixelData) {
         NSLog(@"No pixel data available");
         return;
     }
     
-    unsigned char *bytes = (unsigned char *)[data bytes];
-    int length = (int)[data length];
+    unsigned char *bytes = (unsigned char *)[self.pixelData bytes];
+    int length = (int)[self.pixelData length];
     int width = self.frame.size.width;
     int height = self.frame.size.height;
     int stride = width * 4;
+    int i = 0;
     
     // iterate over rgba buffer
     for (int y = 0; y < height; y++) {
         
         for (int x = 0; x < width; x++) {
             
-            int pos = (y * stride) + (x * 3);
+            int pos = (y * stride) + (x * 4);
             if (pos < length-3) {
                 
                 // read 4 components
@@ -121,6 +123,8 @@
         
         
     }
+    
+    NSLog(@"Finished drawing");
     
 }
 

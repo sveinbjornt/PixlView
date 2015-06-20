@@ -748,13 +748,16 @@
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="Xs6-ub-cND">
                                 <items>
-                                    <menuItem title="RGB 24" state="on" id="aHl-tG-k5q"/>
                                     <menuItem title="RGBA 32" id="A9X-1m-gZN"/>
+                                    <menuItem title="RGB 24" state="on" id="aHl-tG-k5q"/>
                                     <menuItem title="RGB8" id="BaR-mZ-6va"/>
                                     <menuItem title="YUV 420p" id="c4k-yF-evs"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="pixelFormatChanged:" target="Voe-Tx-rLC" id="Szf-ys-mQW"/>
+                        </connections>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="B12-Xv-X2E">
                         <rect key="frame" x="202" y="347" width="45" height="17"/>

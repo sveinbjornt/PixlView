@@ -46,13 +46,19 @@
     pixelBuffer = [[PixelBuffer alloc] initWithContentsOfFile:@"/Users/sveinbjorn/Desktop/kisi.data"];
     pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
     glView.pixelData = [pixelBuffer toRGBA];
+    NSLog(@"Set pixel data in GL view. Length: %d", glView.pixelData.length);
 }
 
 - (IBAction)pixelFormatChanged:(id)sender {
-    pixelBuffer.pixelFormat = [formatPopupButton selectedIndex];
+    pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+    glView.pixelData = [pixelBuffer toRGBA];
+    NSLog(@"Set pixel data in GL view. Length: %d", glView.pixelData.length);
+    [glView setNeedsDisplay:YES];
+    
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    //[glView refresh];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

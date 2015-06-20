@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 {
     
 }
-@property (retain, atomic) NSData *data;
+@property (retain, nonatomic) NSData *data;
 @property PixelFormat pixelFormat;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;

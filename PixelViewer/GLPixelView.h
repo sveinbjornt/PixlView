@@ -13,5 +13,5 @@
     
 }
 @property (retain, atomic) NSData *pixelData;
-
+- (void)refresh;
 @end
