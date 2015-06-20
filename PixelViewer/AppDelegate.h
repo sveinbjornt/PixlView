@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "GLPixelView.h"
+#import "PixelBuffer.h"
 
 #define PIXEL_FORMATS [NSArray arrayWithObjects: @"RGBPixelFormat", nil]
 
@@ -27,6 +28,7 @@
     IBOutlet id pixelScrollView;
     
     GLPixelView *glView;
+    PixelBuffer *pixelBuffer;
 }
 
 @end

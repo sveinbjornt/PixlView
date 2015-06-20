@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GLPixelView.h"
 #import "BackingView.h"
+#import "PixelBuffer.h"
 
 @implementation AppDelegate
 
@@ -29,11 +30,6 @@
 //        NSString *fmtName = [NSClassFromString(format) name];
 //        [formatPopupButton addItemWithTitle:fmtName];
 //    }
-
-    //
-//    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:glAttributes];
-//    NSOpenGLContext *openGLContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
-//    [openGLContext makeCurrentContext];
     
     BackingView *backingView = [[BackingView alloc] initWithFrame:[pixelScrollView frame]];
     backingView.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
@@ -45,10 +41,16 @@
     glView.autoresizingMask = NSViewNotSizable | NSViewMaxXMargin;
     [backingView addSubview:glView];
     
-    
     [pixelScrollView setDocumentView:backingView];
+    
+    pixelBuffer = [[PixelBuffer alloc] initWithContentsOfFile:@"/Users/sveinbjorn/Desktop/kisi.data"];
+    pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+    glView.pixelData = [pixelBuffer toRGBA];
 }
 
+- (IBAction)pixelFormatChanged:(id)sender {
+    pixelBuffer.pixelFormat = [formatPopupButton selectedIndex];
+}
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
 }
@@ -86,6 +88,8 @@
     [fileIconImageView setImage:icon];
     [filePathTextField setStringValue:filePath];
     [fileMD5TextField setStringValue:[self md5hashForFileAtPath:filePath]];
+    
+    
 }
 
 - (IBAction)selectFile:(id)sender {

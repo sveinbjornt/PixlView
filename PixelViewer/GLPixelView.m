@@ -21,7 +21,7 @@
     glDisable(GL_POINT_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
     glEnable(GL_BLEND);
-    
+    glPointSize(1.0f);
 
     return;
 }
@@ -36,9 +36,6 @@
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    
-    //extern void glOrtho (GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
-    
     
     // Use OS X style coordinates, 0,0 is bottom left
     glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
@@ -64,9 +61,6 @@
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    //extern void glOrtho (GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
-
-    
     // Use OS X style coordinates, 0,0 is bottom left
     glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
     
@@ -75,71 +69,51 @@
     
     glClear(GL_COLOR_BUFFER_BIT);
     
-    glColor3f(1, .85, .35);
-    glBegin(GL_TRIANGLES);
-//    glVertex2f(0, 0.6);
-//    glVertex2f(-0.2, -0.30);
-//    glVertex2f(.2, -.3);
-    glVertex2f(100, 100);
-    glVertex2f(200, 200);
-    glVertex2f(100, 200);
-
-    glEnd();
-    
-    
-    [self drawPixelData:nil];
-    
-    
-    
-    
-    glFlush();
+    [self drawPixelData];
     
     [[self openGLContext] flushBuffer];
 }
 
-- (void)drawPixelData:(unsigned char *)pixelDataPtr {
+- (void)drawPixelData {
     
+    NSData *data = self.pixelData;
+    if (!data) {
+        NSLog(@"No pixel data available");
+        return;
+    }
     
-//    int len = 640*480*3;
-//    void *d = malloc(len);
-//    memset(d, 100, len);
-//    NSData *rgbData = [NSData dataWithBytes:d length:len];
-//    [rgbData writeToFile:@"/Users/sveinbjorn/Desktop/data.rgb" atomically:YES];
-
-    
-    NSData *data = [NSData dataWithContentsOfFile:@"/Users/sveinbjorn/Desktop/kisi.data"];
-    unsigned char *bytes = [data bytes];
-    int length = [data length];
+    unsigned char *bytes = (unsigned char *)[data bytes];
+    int length = (int)[data length];
     int width = self.frame.size.width;
     int height = self.frame.size.height;
-    int stride = width * 3;
+    int stride = width * 4;
     
-    
-    
+    // iterate over rgba buffer
     for (int y = 0; y < height; y++) {
         
         for (int x = 0; x < width; x++) {
             
             int pos = (y * stride) + (x * 3);
-            if (pos < length-2) {
+            if (pos < length-3) {
                 
+                // read 4 components
                 unsigned char r = bytes[pos];
                 unsigned char g = bytes[pos+1];
                 unsigned char b = bytes[pos+2];
+                unsigned char a = bytes[pos+3];
                 
                 float rf = (float)r / 255;
                 float gf = (float)g / 255;
                 float bf = (float)b / 255;
+                float af = (float)a / 255;
                 
-                glColor4f(rf,gf,bf, 0.0);
+                glColor4f(rf,gf,bf,af);
                 
             } else {
-                glColor4f(1,1,1,0.5);
+                glColor4f(1,1,1,1);
             }
 
-            
-            
-            glPointSize(1.0f);
+            // Draw point
             glBegin(GL_POINTS);
             glVertex2f(x, y);
             glEnd();
