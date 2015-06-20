@@ -7,9 +7,27 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GLPixelView.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+#define PIXEL_FORMATS [NSArray arrayWithObjects: @"RGBPixelFormat", nil]
 
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTextFieldDelegate>
+{
+    IBOutlet id mainWindow;
+    
+    IBOutlet NSImageView *fileIconImageView;
+    IBOutlet id filePathTextField;
+    IBOutlet id fileMD5TextField;
+    
+    IBOutlet id formatPopupButton;
+    IBOutlet id widthTextField;
+    IBOutlet id heightTextField;
+    IBOutlet id offsetTextField;
+
+    IBOutlet id pixelScrollView;
+    
+    GLPixelView *glView;
+}
 
 @end
 
