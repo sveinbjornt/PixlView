@@ -24,7 +24,9 @@
     IBOutlet id widthTextField;
     IBOutlet id heightTextField;
     IBOutlet id offsetTextField;
-
+    IBOutlet id scaleTextField;
+    IBOutlet id bufferInfoTextField;
+    
     IBOutlet id pixelScrollView;
     
     GLPixelView *glView;

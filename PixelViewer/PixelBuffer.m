@@ -68,6 +68,7 @@
 }
 
 - (NSData *)rgb8_2_rgba  {
+    
     unsigned char *rgb8Buffer = (unsigned char *)[self.data bytes];
     int rgb8BufferLength = (int)[self.data length];
     int pixelCount = rgb8BufferLength;
@@ -135,8 +136,8 @@
 
 - (NSData *)toRGBA
 {
-    NSData *d = self.data;
     NSString *fmtName = [[PixelBuffer supportedFormats] objectAtIndex:(int)self.pixelFormat];
+    NSData *d = self.data;
     NSLog(@"Converting format %@ to RGBA", fmtName);
 
     NSLog(@"Data length before conversion: %d", (int)d.length);
@@ -154,29 +155,31 @@
             break;
     }
     NSLog(@"Data length after conversion: %d", (int)d.length);
+    
+    
     return d;
 }
 
-- (int)expectedBytesForImageSize:(NSSize)size
+- (int)expectedBitLengthForImageSize:(NSSize)size
 {
-    int bytesPerPixel = 32;
+    int bpp = 32;
     
     switch (self.pixelFormat) {
             
         case PIXEL_FORMAT_RGBA:
-            bytesPerPixel = 32;
+            bpp = 32;
             break;
         case PIXEL_FORMAT_RGB24:
-            bytesPerPixel = 24;
+            bpp = 24;
             break;
         case PIXEL_FORMAT_RGB8:
-            bytesPerPixel = 8;
+            bpp = 8;
             break;
         case PIXEL_FORMAT_YUV420P:
-            bytesPerPixel = 12;
+            bpp = 12;
             break;
     }
-    return size.width * size.height * bytesPerPixel;
+    return size.width * size.height * bpp;
 }
 
 @end

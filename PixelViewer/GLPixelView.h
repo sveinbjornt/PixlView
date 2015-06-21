@@ -10,10 +10,13 @@
 
 @interface GLPixelView : NSOpenGLView
 {
-    
+    GLuint framebuffer;
+    GLuint texture;
 }
 @property (retain, atomic) NSData *pixelData;
 @property CGFloat scale;
 
+- (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale;
 - (void)refresh;
+    
 @end

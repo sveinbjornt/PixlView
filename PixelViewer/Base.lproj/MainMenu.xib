@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="bufferInfoTextField" destination="SnV-dL-7jP" id="f3q-0a-pRC"/>
                 <outlet property="fileIconImageView" destination="0Y2-ZC-pqS" id="CL2-Hw-Tks"/>
                 <outlet property="fileMD5TextField" destination="CT6-RI-08f" id="Sxf-XP-5dc"/>
                 <outlet property="filePathTextField" destination="0pN-lG-Oho" id="g7Y-qa-7rN"/>
@@ -21,6 +22,7 @@
                 <outlet property="mainWindow" destination="QvC-M9-y7g" id="446-JU-qqh"/>
                 <outlet property="offsetTextField" destination="oYu-Lh-ud3" id="Nd5-ID-YqQ"/>
                 <outlet property="pixelScrollView" destination="ilk-3S-T7F" id="9MO-an-WAe"/>
+                <outlet property="scaleTextField" destination="85x-my-v4O" id="vAI-Fj-fa8"/>
                 <outlet property="widthTextField" destination="Vkk-f7-KOw" id="wys-An-Cjo"/>
             </connections>
         </customObject>
@@ -678,15 +680,15 @@
         <window title="PixelViewer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="696" height="412"/>
+            <rect key="contentRect" x="335" y="390" width="780" height="412"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <value key="minSize" type="size" width="600" height="350"/>
+            <value key="minSize" type="size" width="780" height="350"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="696" height="412"/>
+                <rect key="frame" x="0.0" y="0.0" width="780" height="412"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="ilk-3S-T7F">
-                        <rect key="frame" x="20" y="20" width="656" height="316"/>
+                        <rect key="frame" x="20" y="20" width="740" height="296"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="1wd-60-uKT">
                             <rect key="frame" x="1" y="1" width="166" height="79"/>
@@ -837,17 +839,34 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="85x-my-v4O">
-                        <rect key="frame" x="600" y="344" width="76" height="22"/>
+                        <rect key="frame" x="600" y="344" width="42" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="100%" drawsBackground="YES" id="hbA-bQ-3gd">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="100%" drawsBackground="YES" id="hbA-bQ-3gd">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <slider verticalHuggingPriority="750" id="fq0-Ko-QWS">
+                        <rect key="frame" x="648" y="346" width="114" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="80" doubleValue="20" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ul5-K9-d3C"/>
+                        <connections>
+                            <action selector="scaleSliderValueChanged:" target="Voe-Tx-rLC" id="hA6-Y5-zwe"/>
+                        </connections>
+                    </slider>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="SnV-dL-7jP">
+                        <rect key="frame" x="21" y="325" width="623" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" allowsEditingTextAttributes="YES" id="yd3-Ic-XdA">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="506" y="350"/>
+            <point key="canvasLocation" x="547" y="350"/>
         </window>
     </objects>
     <resources>

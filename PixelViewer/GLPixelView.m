@@ -15,15 +15,60 @@
 
 @implementation GLPixelView
 
+- (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale {
+    
+    frameRect.size.width = frameRect.size.width * scale;
+    frameRect.size.height = frameRect.size.height * scale;
+    if ((self = [super initWithFrame:frameRect pixelFormat:format])) {
+        self.scale = scale;
+    }
+    return self;
+}
+
 - (void)prepareOpenGL {
     glClearColor(0, 0, 0, 0);
     glDisable(GL_POINT_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
     glEnable(GL_BLEND);
-    self.scale = 2.0f;
-
-    return;
+    
+//    [self createFramebuffer];
 }
+
+- (void)setPixelData:(NSData *)pixelData {
+    _pixelData = pixelData;
+    [self createTexture];
+}
+
+- (void)setFrame:(NSRect)frameRect {
+    frameRect.size.width = frameRect.size.width * self.scale;
+    frameRect.size.height = frameRect.size.height * self.scale;
+    [super setFrame:frameRect];
+    [self createTexture];
+}
+
+//- (void)createFramebuffer {
+//    glGenFramebuffers(1, &framebuffer);
+//    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+//    
+//    // The texture we're going to render to
+//    glGenTextures(1, &texture);
+//    glBindTexture(GL_TEXTURE_2D, texture);
+//    
+//    // Give an empty image to OpenGL
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, self.frame.size.width, self.frame.size.height, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//    
+//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+//    
+//    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+//        NSLog(@"Framebuffer failed");
+//    
+//    // unbind
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//
+//}
 
 
 - (void)reshape {
@@ -41,8 +86,6 @@
 //    
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
-
-
 }
 
 - (void)refresh {
@@ -52,6 +95,10 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
+    
+    if (self.pixelData == nil) {
+        return;
+    }
     
     [[self openGLContext] makeCurrentContext];
     
@@ -68,57 +115,155 @@
     
     glClear(GL_COLOR_BUFFER_BIT);
 
+//    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+//    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+//    glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
+
+//    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+//    glDrawBuffers(1, DrawBuffers);
     
-    [self drawPixelData];
+    
+    
+        
+    
+    
+//    [self drawPixelData];
+    
+//    int dataLength = self.frame.size.width * self.frame.size.height * 4;
+//    unsigned char *buf = malloc(dataLength);
+////    glReadPixels(0, 0, self.frame.size.width, self.frame.size.height, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+//    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
+//    [[NSData dataWithBytes:buf length:dataLength] writeToFile:@"/Users/sveinbjorn/Desktop/tex.data" atomically:NO];
+    
+    
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    
+    // Draw texture
+    
+    if (texture) {
+
+        //glActiveTexture(texture);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        
+        int x1 = 0;
+        int y1 = 0;
+        
+        int x2 = self.frame.size.width;
+        int y2 = self.frame.size.height;
+        
+        glBegin(GL_QUADS);
+        
+        glTexCoord2f(0.0f,1.0f);
+        glVertex2f(x1,y2);
+        
+        glTexCoord2f(0.0f,0.0f);
+        glVertex2f(x1,y1);
+        
+        glTexCoord2f(1.0f,0.0f);
+        glVertex2f(x2,y1);
+        
+        glTexCoord2f(1.0f,1.0f);
+        glVertex2f(x2,y2);
+        
+    //    glTexCoord2f (0.0f, 0.0f);
+    //    glVertex2f (0.0f, 0.0f);
+    //    glTexCoord2f (x2, 0.0f);
+    //    glVertex2f (1.0f, 0.0f);
+    //    glTexCoord2f (x2, y2);
+    //    glVertex2f (1.0f, 1.0f);
+    //    glTexCoord2f (0.0f, y2);
+    //    glVertex2f (0.0f, 1.0f);
+
+        
+        glEnd();
+    }
     
     [[self openGLContext] flushBuffer];
 }
 
-- (void)drawPixelData {
+- (void)createTexture {
     
-    if (!self.pixelData) {
-        NSLog(@"No pixel data available");
-        return;
+    
+    if (texture) {
+        glDeleteTextures(1, &texture);
     }
     
-    unsigned char *bytes = (unsigned char *)[self.pixelData bytes];
-    int length = (int)[self.pixelData length];
-    int width = self.frame.size.width;
-    int height = self.frame.size.height;
-    int stride = width * 4;
+    // The texture we're going to render to
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
     
-    glPointSize(1.0f);
+    int w = self.frame.size.width/self.scale;
+    int h = self.frame.size.height/self.scale;
     
-    // iterate over rgba buffer
-    for (int y = 0; y < height; y++) {
-        
-        for (int x = 0; x < width; x++) {
-            
-            int pos = (y * stride) + (x * 4);
-            if (pos < length-3) {
-                
-                // read 4 components
-                float rf = (float)bytes[pos] / 255;
-                float gf = (float)bytes[pos+1] / 255;
-                float bf = (float)bytes[pos+2] / 255;
-                float af = (float)bytes[pos+3] / 255;
-                
-                glColor4f(rf,gf,bf,af);
-                
-            } else {
-                glColor4f(1,1,1,1);
-            }
-
-            // Draw point
-            glBegin(GL_POINTS);
-            glVertex2f(x, y);
-            glEnd();
-        }
+    // Give an empty image to OpenGL
+    int bufLength = w * h * 4;
+    unsigned char *buf = malloc(bufLength);
+    if (self.pixelData.length > bufLength) {
+        memcpy(buf, self.pixelData.bytes, bufLength);
+    } else {
+        memset(buf, 0, bufLength);
+        memcpy(buf, self.pixelData.bytes, self.pixelData.length);
     }
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,GL_RGBA, GL_UNSIGNED_BYTE, buf);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    
+    [[NSData dataWithBytes:buf length:bufLength] writeToFile:@"/Users/sveinbjorn/Desktop/tex.data" atomically:NO];
+    free(buf);
+    
+    NSLog(@"Created texture %.1f x %.1f", self.frame.size.width, self.frame.size.height);
 
     
-
 }
+
+//- (void)drawPixelData {
+//    
+//    if (!self.pixelData) {
+//        NSLog(@"No pixel data available");
+//        return;
+//    }
+//    
+//    unsigned char *bytes = (unsigned char *)[self.pixelData bytes];
+//    int length = (int)[self.pixelData length];
+//    int width = self.frame.size.width;
+//    int height = self.frame.size.height;
+//    int stride = width * 4;
+//    
+//    glPointSize(1.0f);
+//    
+//    // iterate over rgba buffer
+//    for (int y = 0; y < height; y++) {
+//        
+//        for (int x = 0; x < width; x++) {
+//            
+//            int pos = (y * stride) + (x * 4);
+//            if (pos < length-3) {
+//                
+//                // read 4 components
+//                float rf = (float)bytes[pos] / 255;
+//                float gf = (float)bytes[pos+1] / 255;
+//                float bf = (float)bytes[pos+2] / 255;
+//                float af = (float)bytes[pos+3] / 255;
+//                
+//                glColor4f(rf,gf,bf,af);
+//                
+//            } else {
+//                glColor4f(1,1,1,1);
+//            }
+//
+//            // Draw point
+//            glBegin(GL_POINTS);
+//            glVertex2f(x, y);
+//            glEnd();
+//        }
+//    }
+//}
+
+
+#pragma mark -
 
 -(BOOL)isFlipped
 {

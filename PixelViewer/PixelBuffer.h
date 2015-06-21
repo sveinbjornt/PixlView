@@ -27,6 +27,6 @@ typedef enum : NSUInteger {
 - (unsigned char *)bytes;
 + (NSArray *)supportedFormats;
 - (NSData *)toRGBA;
-
+- (int)expectedBitLengthForImageSize:(NSSize)size;
 
 @end

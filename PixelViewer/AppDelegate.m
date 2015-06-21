@@ -16,21 +16,21 @@
     
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
-    CGFloat scale = 2.0f;
+    CGFloat scale = 1.0f;
+    
+    // Create GL view and add to scroll view
+    NSRect glFrame = NSMakeRect(0, 0, width, height);
+    glView = [[GLPixelView alloc] initWithFrame:glFrame pixelFormat:nil scale:scale];
+    glView.scale = scale;
+    glView.autoresizingMask = NSViewNotSizable;
+    [pixelScrollView setDocumentView:glView];
     
     // Populate pixel format popup
     [formatPopupButton removeAllItems];
     for (NSString *format in [PixelBuffer supportedFormats]) {
         [formatPopupButton addItemWithTitle:format];
     }
-    
-    
-    // Create GL view and add to scroll view
-    NSRect glFrame = NSMakeRect(0, 0, width, height);
-    glView = [[GLPixelView alloc] initWithFrame:glFrame pixelFormat:nil];
-    glView.scale = scale;
-    glView.autoresizingMask = NSViewNotSizable;
-    [pixelScrollView setDocumentView:glView];
+
 }
 
 #pragma mark - Control delegate
@@ -39,17 +39,44 @@
     pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
     glView.pixelData = [pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
-    
+    [self updateBufferInfo];
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
-    
-    NSRect glFrame = NSMakeRect(0, 0, width, height);
-    glView.frame = glFrame;
+
+    glView.frame = NSMakeRect(0, 0, width, height);
     [glView setNeedsDisplay:YES];
+    [self updateBufferInfo];
+}
+
+- (IBAction)scaleSliderValueChanged:(id)sender {
+    int perc = ([sender intValue] * 5);
+    glView.scale = (float)perc / 100;
+    [scaleTextField setStringValue:[NSString stringWithFormat:@"%d%%", perc]];
+
     
+    int width = [[widthTextField stringValue] intValue];
+    int height = [[heightTextField stringValue] intValue];
+    glView.frame = NSMakeRect(0, 0, width, height);
+    [glView setNeedsDisplay:YES];
+}
+
+- (void)updateBufferInfo {
+    int width = [[widthTextField stringValue] intValue];
+    int height = [[heightTextField stringValue] intValue];
+
+    int fileDataLength = pixelBuffer.data.length;
+    int bufferSize = [pixelBuffer expectedBitLengthForImageSize:NSMakeSize(width, height)] / 8;
+    
+    NSString *bufferInfoString = [NSString stringWithFormat:
+                                  @"Data in: %d    Buffer out: %d   Diff: %@%d",
+                                  fileDataLength,
+                                  bufferSize,
+                                  fileDataLength-bufferSize > 0 ? @"+" : @"",
+                                  fileDataLength-bufferSize];
+    [bufferInfoTextField setStringValue:bufferInfoString];
 }
 
 #pragma mark - NSApplicationDelegate
