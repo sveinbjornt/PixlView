@@ -25,14 +25,18 @@
 }
 
 - (unsigned char *)bytes {
-    return (unsigned char *)[self.data bytes];
+    return (unsigned char *)([self.data bytes] + self.offset);
+}
+
+- (int)length {
+    return (int)self.data.length - self.offset;
 }
 
 + (NSArray *)supportedFormats {
     return [NSArray arrayWithObjects:@"RGBA",
                                      @"RGB24",
                                      @"RGB8",
-                                     @"YUV420p",
+                                     //@"YUV420p",
                                     nil];
 }
 
@@ -40,8 +44,8 @@
 
 - (NSData *)rgb24_2_rgba {
 
-    unsigned char *rgbBuffer = (unsigned char *)[self.data bytes];
-    int rgbBufferLength = (int)[self.data length];
+    unsigned char *rgbBuffer = (unsigned char *)[self bytes];
+    int rgbBufferLength = (int)[self length];
     int pixelCount = rgbBufferLength/3;
     
     if (pixelCount == 0 || rgbBufferLength < 3) {
@@ -69,8 +73,8 @@
 
 - (NSData *)rgb8_2_rgba  {
     
-    unsigned char *rgb8Buffer = (unsigned char *)[self.data bytes];
-    int rgb8BufferLength = (int)[self.data length];
+    unsigned char *rgb8Buffer = (unsigned char *)[self bytes];
+    int rgb8BufferLength = (int)[self length];
     int pixelCount = rgb8BufferLength;
     
     int rgbaBufferLength = pixelCount * 4;
@@ -137,27 +141,25 @@
 - (NSData *)toRGBA
 {
     NSString *fmtName = [[PixelBuffer supportedFormats] objectAtIndex:(int)self.pixelFormat];
-    NSData *d = self.data;
     NSLog(@"Converting format %@ to RGBA", fmtName);
 
-    NSLog(@"Data length before conversion: %d", (int)d.length);
     switch (self.pixelFormat) {
             
         case PIXEL_FORMAT_RGBA:
+            NSLog(@"Data length %d", [self length]);
+            return [NSData dataWithBytes:[self bytes] length:[self length]];
             break;
         case PIXEL_FORMAT_RGB24:
-            d = [self rgb24_2_rgba];
+            return [self rgb24_2_rgba];
             break;
         case PIXEL_FORMAT_RGB8:
-            d = [self rgb8_2_rgba];
+            return [self rgb8_2_rgba];
             break;
         case PIXEL_FORMAT_YUV420P:
             break;
     }
-    NSLog(@"Data length after conversion: %d", (int)d.length);
     
-    
-    return d;
+    return nil;
 }
 
 - (int)expectedBitLengthForImageSize:(NSSize)size

@@ -21,10 +21,13 @@ typedef enum : NSUInteger {
 }
 @property (retain, nonatomic) NSData *data;
 @property PixelFormat pixelFormat;
+@property int offset;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;
 - (instancetype)initWithData:(NSData *)d;
+
 - (unsigned char *)bytes;
+- (int)length;
 + (NSArray *)supportedFormats;
 - (NSData *)toRGBA;
 - (int)expectedBitLengthForImageSize:(NSSize)size;

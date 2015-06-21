@@ -11,21 +11,10 @@
 		F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE3A1B348E4F005FAD6C /* AppDelegate.m */; };
 		F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3C1B348E4F005FAD6C /* Images.xcassets */; };
 		F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */; };
-		F4BECE4C1B348E50005FAD6C /* PixelViewerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */; };
 		F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE5C1B35B541005FAD6C /* GLPixelView.m */; };
 		F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE601B35B755005FAD6C /* CGPixelView.m */; };
 		F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE661B35D878005FAD6C /* PixelBuffer.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		F4BECE461B348E50005FAD6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F4BECE2A1B348E4F005FAD6C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F4BECE311B348E4F005FAD6C;
-			remoteInfo = PixelViewer;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		F4BECE321B348E4F005FAD6C /* PixelViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,9 +24,6 @@
 		F4BECE3A1B348E4F005FAD6C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F4BECE3C1B348E4F005FAD6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F4BECE3F1B348E4F005FAD6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		F4BECE451B348E50005FAD6C /* PixelViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PixelViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4BECE4A1B348E50005FAD6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PixelViewerTests.m; sourceTree = "<group>"; };
 		F4BECE5B1B35B541005FAD6C /* GLPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPixelView.h; sourceTree = "<group>"; };
 		F4BECE5C1B35B541005FAD6C /* GLPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPixelView.m; sourceTree = "<group>"; };
 		F4BECE5F1B35B755005FAD6C /* CGPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPixelView.h; sourceTree = "<group>"; };
@@ -54,13 +40,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4BECE421B348E50005FAD6C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -68,7 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				F4BECE341B348E4F005FAD6C /* PixelViewer */,
-				F4BECE481B348E50005FAD6C /* PixelViewerTests */,
 				F4BECE331B348E4F005FAD6C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				F4BECE321B348E4F005FAD6C /* PixelViewer.app */,
-				F4BECE451B348E50005FAD6C /* PixelViewerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +66,8 @@
 				F4BECE3A1B348E4F005FAD6C /* AppDelegate.m */,
 				F4BECE651B35D878005FAD6C /* PixelBuffer.h */,
 				F4BECE661B35D878005FAD6C /* PixelBuffer.m */,
+				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
+				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
 				F4BECE681B35E5B3005FAD6C /* Views */,
 				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
 				F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */,
@@ -106,28 +85,9 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F4BECE481B348E50005FAD6C /* PixelViewerTests */ = {
-			isa = PBXGroup;
-			children = (
-				F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */,
-				F4BECE491B348E50005FAD6C /* Supporting Files */,
-			);
-			path = PixelViewerTests;
-			sourceTree = "<group>";
-		};
-		F4BECE491B348E50005FAD6C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F4BECE4A1B348E50005FAD6C /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		F4BECE681B35E5B3005FAD6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
-				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
 				F4BECE5F1B35B755005FAD6C /* CGPixelView.h */,
 				F4BECE601B35B755005FAD6C /* CGPixelView.m */,
 			);
@@ -154,24 +114,6 @@
 			productReference = F4BECE321B348E4F005FAD6C /* PixelViewer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F4BECE441B348E50005FAD6C /* PixelViewerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F4BECE521B348E50005FAD6C /* Build configuration list for PBXNativeTarget "PixelViewerTests" */;
-			buildPhases = (
-				F4BECE411B348E50005FAD6C /* Sources */,
-				F4BECE421B348E50005FAD6C /* Frameworks */,
-				F4BECE431B348E50005FAD6C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F4BECE471B348E50005FAD6C /* PBXTargetDependency */,
-			);
-			name = PixelViewerTests;
-			productName = PixelViewerTests;
-			productReference = F4BECE451B348E50005FAD6C /* PixelViewerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,10 +125,6 @@
 				TargetAttributes = {
 					F4BECE311B348E4F005FAD6C = {
 						CreatedOnToolsVersion = 6.0.1;
-					};
-					F4BECE441B348E50005FAD6C = {
-						CreatedOnToolsVersion = 6.0.1;
-						TestTargetID = F4BECE311B348E4F005FAD6C;
 					};
 				};
 			};
@@ -204,7 +142,6 @@
 			projectRoot = "";
 			targets = (
 				F4BECE311B348E4F005FAD6C /* PixelViewer */,
-				F4BECE441B348E50005FAD6C /* PixelViewerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +153,6 @@
 			files = (
 				F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */,
 				F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F4BECE431B348E50005FAD6C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,23 +171,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4BECE411B348E50005FAD6C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F4BECE4C1B348E50005FAD6C /* PixelViewerTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F4BECE471B348E50005FAD6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F4BECE311B348E4F005FAD6C /* PixelViewer */;
-			targetProxy = F4BECE461B348E50005FAD6C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */ = {
@@ -369,42 +283,6 @@
 			};
 			name = Release;
 		};
-		F4BECE531B348E50005FAD6C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PixelViewerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PixelViewer.app/Contents/MacOS/PixelViewer";
-			};
-			name = Debug;
-		};
-		F4BECE541B348E50005FAD6C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PixelViewerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PixelViewer.app/Contents/MacOS/PixelViewer";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -422,15 +300,6 @@
 			buildConfigurations = (
 				F4BECE501B348E50005FAD6C /* Debug */,
 				F4BECE511B348E50005FAD6C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F4BECE521B348E50005FAD6C /* Build configuration list for PBXNativeTarget "PixelViewerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F4BECE531B348E50005FAD6C /* Debug */,
-				F4BECE541B348E50005FAD6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
