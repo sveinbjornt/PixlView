@@ -13,19 +13,20 @@
 @implementation AppDelegate
 
 - (void)awakeFromNib {
+
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    //[self openFile:@"/Users/sveinbjorn/Desktop/kisi.data"];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+
 }
 
-
-#pragma mark - Control delegate
-
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
+                    hasVisibleWindows:(BOOL)flag {
+    return NO;
+}
 
 @end

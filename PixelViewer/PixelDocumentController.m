@@ -15,47 +15,46 @@
     
     self.doc = self.document;
 
-//    [self loadResolutionsArray];
+    [self loadResolutionsArray];
 
+
+    
+    // Create GL view and add to scroll view
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
     CGFloat scale = 1.0f;
-
-    // Create GL view and add to scroll view
-    NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = {
-        0
-    };
+    NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = { 0 };
     NSRect glFrame = NSMakeRect(0, 0, width, height);
     glView = [[GLPixelView alloc] initWithFrame:glFrame
                                     pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
                                           scale:scale];
     glView.autoresizingMask = NSViewNotSizable;
+    [glView setWantsBestResolutionOpenGLSurface:YES];
     [pixelScrollView setDocumentView:glView];
 
+    
     // Populate pixel format popup
     [formatPopupButton removeAllItems];
     for (NSString *format in [PixelBuffer supportedFormats]) {
         [formatPopupButton addItemWithTitle:format];
     }
 
-//    [self populatePresetPopupMenu];
-
-    NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:self.doc.filePath];
-    [fileIconImageView setImage:icon];
-    [filePathTextField setStringValue:self.doc.filePath];
-//    [fileMD5TextField setStringValue:[self md5hashForFileAtPath:self.doc.filePath]];
+    // Populate presets menu
+    [fileMD5TextField setStringValue:[self md5hashForFileAtPath:self.doc.filePath]];
 
     self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
     glView.pixelData = [self.doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
     
     [offsetSlider setMaxValue:[self.doc.pixelBuffer length]];
-    //    [self populatePresetPopupMenu];
+    [self populatePresetPopupMenu];
     [self updateBufferInfo];
     
-    
-    
 }
+
+
+#pragma mark - Control delegate
+
 
 - (IBAction)pixelFormatChanged:(id)sender {
     self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
@@ -63,26 +62,6 @@
     [glView setNeedsDisplay:YES];
     [self updateBufferInfo];
 }
-
-//- (IBAction)presetSelected:(id)sender {
-//    int index = (int)[presetPopupButton indexOfSelectedItem];
-//
-//    NSDictionary *res = [resolutions objectAtIndex:index];
-//    int w = [[res objectForKey:@"width"] intValue];
-//    int h = [[res objectForKey:@"height"] intValue];
-//    PixelFormat pixFmt = [self pixelFormatMatchingResolution:res];
-//
-//    [widthTextField setStringValue:[NSString stringWithFormat:@"%d", w]];
-//    [heightTextField setStringValue:[NSString stringWithFormat:@"%d", h]];
-//
-//    if (pixFmt != -1) {
-//        [formatPopupButton selectItemAtIndex:pixFmt];
-//        [self pixelFormatChanged:nil];
-//    }
-//
-//
-//    [self controlTextDidChange:nil];
-//}
 
 - (void)controlTextDidChange:(NSNotification *)notification {
 
@@ -111,9 +90,12 @@
 
 - (IBAction)scaleSliderValueChanged:(id)sender {
     int perc = ([scaleSlider intValue] * 5);
-    glView.scale = (float)perc / 100;
+    float scale = (float)perc / 100;
+    if (glView.scale == scale) {
+        return;
+    }
+    glView.scale = scale;
     [scaleTextField setStringValue:[NSString stringWithFormat:@"%d%%", perc]];
-
 
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
@@ -208,154 +190,190 @@
 
 }
 
+#pragma mark -
+
+- (IBAction)bestFitButtonPressed:(id)sender {
+    NSDictionary *res = [self bestPreset];
+    if (res != nil) {
+        int index = (int)[resolutions indexOfObject:res];
+        [self loadPreset:[resolutions objectAtIndex:index]];
+    } else {
+        NSBeep();
+    }
+}
+
+- (IBAction)presetSelected:(id)sender {
+    int index = (int)[presetPopupButton indexOfSelectedItem];
+    [self loadPreset:[resolutions objectAtIndex:index]];
+}
+
+- (NSDictionary *)bestPreset {
+    NSArray *matches = [self matchingResolutionPresets];
+    if ([matches count]) {
+        return [matches objectAtIndex:0];
+    }
+    return nil;
+}
+
+- (void)loadPreset:(NSDictionary *)res {
+    int w = [[res objectForKey:@"width"] intValue];
+    int h = [[res objectForKey:@"height"] intValue];
+    PixelFormat pixFmt = [self pixelFormatMatchingResolution:res];
+    
+    [widthTextField setStringValue:[NSString stringWithFormat:@"%d", w]];
+    [heightTextField setStringValue:[NSString stringWithFormat:@"%d", h]];
+    
+    if (pixFmt != -1) {
+        [formatPopupButton selectItemAtIndex:pixFmt];
+        [self pixelFormatChanged:nil];
+    }
+    
+    [self controlTextDidChange:nil];
+    
+    [presetPopupButton selectItemAtIndex:[resolutions indexOfObject:res]];
+}
 
 #pragma mark - File
-//
-//- (void)openFile:(NSString *)filePath {
-//
-//
-//    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:filePath]];
-//}
 
+- (NSString *)md5hashForFileAtPath:(NSString *)path
+{
+    BOOL isDir;
 
-//- (NSString *)md5hashForFileAtPath:(NSString *)path
-//{
-//    BOOL isDir;
-//
-//    //make sure it exists and isn't folder
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory: &isDir] || isDir) {
-//        return nil;
-//    }
-//
-//    NSPipe *pipe = [NSPipe pipe];
-//    NSTask *task = [[NSTask alloc] init];
-//    [task setLaunchPath:@"/sbin/md5"];
-//    [task setArguments:[NSArray arrayWithObject:path]];
-//    [task setStandardOutput:pipe];
-//    [task launch];
-//
-//    //read the output from the command
-//    NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-//
-//    NSString *outputStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-//    return [[outputStr componentsSeparatedByString:@" = "] objectAtIndex:1];
-//}
+    //make sure it exists and isn't folder
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory: &isDir] || isDir) {
+        return nil;
+    }
+
+    NSPipe *pipe = [NSPipe pipe];
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/sbin/md5"];
+    [task setArguments:[NSArray arrayWithObject:path]];
+    [task setStandardOutput:pipe];
+    [task launch];
+
+    //read the output from the command
+    NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
+
+    NSString *outputStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *md5string = [[outputStr componentsSeparatedByString:@" = "] objectAtIndex:1];
+    return [NSString stringWithFormat:@"MD5: %@", md5string];
+}
 
 #pragma mark - Resolution presets
 
-//- (void)populatePresetPopupMenu {
-//
-//    [presetPopupButton removeAllItems];
-//
-//    NSArray *matches = [self matchingResolutionPresets];
+- (void)populatePresetPopupMenu {
+
+    [presetPopupButton removeAllItems];
+
+    NSArray *matches = [self matchingResolutionPresets];
+
+    for (NSDictionary *res in resolutions) {
+        int w = [[res objectForKey:@"width"] intValue];
+        int h = [[res objectForKey:@"height"] intValue];
+
+        NSString *presetName = [NSString stringWithFormat:@"%d x %d", w, h];
+        [presetPopupButton addItemWithTitle:presetName];
+    }
+
+
+
+    NSArray *menuItems = [presetPopupButton itemArray];
+    for (NSMenuItem *menuItem in menuItems) {
+
+        int index = (int)[presetPopupButton indexOfItem:menuItem];
+        NSDictionary *resInfoDict = [resolutions objectAtIndex:index];
+
+        NSColor *resColor = [NSColor clearColor];
+        NSString *title = menuItem.title;
+
+        // Check if match
+        PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
+        if (pixFmt != -1) {
+            resColor = [NSColor greenColor];
+            NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
+            title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
+        }
+        NSDictionary *textAttr = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  resColor, NSBackgroundColorAttributeName,
+                                  [NSFont systemFontOfSize: [NSFont systemFontSize]], NSFontAttributeName, nil];
+
+
+        NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:title attributes:textAttr];
+
+        [menuItem setAttributedTitle:attrTitle];
+    }
+}
+
+- (PixelFormat)pixelFormatMatchingResolution:(NSDictionary *)resInfoDict {
+    int pixelCount = [[resInfoDict objectForKey:@"pixels"] intValue];
+
+    if (pixelCount * 4 == self.doc.pixelBuffer.length) {
+        return PIXEL_FORMAT_RGBA;
+    } else if (pixelCount * 3 == self.doc.pixelBuffer.length) {
+        return PIXEL_FORMAT_RGB24;
+    } else if (pixelCount * 1 == self.doc.pixelBuffer.length) {
+        return PIXEL_FORMAT_RGB8;
+    }
+    return -1;
+}
+
+- (NSArray *)matchingResolutionPresets {
+    NSMutableArray *matches = [NSMutableArray array];
+    if (self.doc.pixelBuffer.data == nil || [self.doc.pixelBuffer.data length] == 0) {
+        return matches;
+    }
+
+    for (NSDictionary *res in resolutions) {
+//        int w = [[res objectForKey:@"width"] intValue];
+//        int h = [[res objectForKey:@"height"] intValue];
+        int pixCount = [[res objectForKey:@"pixels"] intValue];
+        int docDataLength = [self.doc.pixelBuffer.data length];
+        BOOL match = NO;
+        if (pixCount * 4 == docDataLength) {
+            match = YES;
+        } else if (pixCount * 3 == docDataLength) {
+            match = YES;
+        } else if (pixCount * 1 == docDataLength) {
+            match = YES;
+        }
+        if (match) {
+            [matches addObject:res];
+        }
+    }
+    return matches;
+}
+
+//- (BOOL)guessResolution:(NSSize *)outSize pixelFormat:(PixelFormat *)format {
+//    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
+//    NSArray *resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
 //
 //    for (NSDictionary *res in resolutions) {
 //        int w = [[res objectForKey:@"width"] intValue];
 //        int h = [[res objectForKey:@"height"] intValue];
-//
-//        NSString *presetName = [NSString stringWithFormat:@"%d x %d", w, h];
-//        [presetPopupButton addItemWithTitle:presetName];
-//    }
-//
-//
-//
-//    NSArray *menuItems = [presetPopupButton itemArray];
-//    for (NSMenuItem *menuItem in menuItems) {
-//
-//        int index = (int)[presetPopupButton indexOfItem:menuItem];
-//        NSDictionary *resInfoDict = [resolutions objectAtIndex:index];
-//
-//        NSColor *resColor = [NSColor clearColor];
-//        NSString *title = menuItem.title;
-//
-//        // Check if match
-//        PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
-//        if (pixFmt != -1) {
-//            resColor = [NSColor greenColor];
-//            NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
-//            title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
-//        }
-//        NSDictionary *textAttr = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                  resColor, NSBackgroundColorAttributeName,
-//                                  [NSFont systemFontOfSize: [NSFont systemFontSize]], NSFontAttributeName, nil];
-//
-//
-//        NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:title attributes:textAttr];
-//
-//        [menuItem setAttributedTitle:attrTitle];
-//    }
-//}
-//
-//- (PixelFormat)pixelFormatMatchingResolution:(NSDictionary *)resInfoDict {
-//    int pixelCount = [[resInfoDict objectForKey:@"pixels"] intValue];
-//
-//    if (pixelCount * 4 == pixelBuffer.length) {
-//        return PIXEL_FORMAT_RGBA;
-//    } else if (pixelCount * 3 == pixelBuffer.length) {
-//        return PIXEL_FORMAT_RGB24;
-//    } else if (pixelCount * 1 == pixelBuffer.length) {
-//        return PIXEL_FORMAT_RGB8;
-//    }
-//    return -1;
-//}
-//
-//- (NSArray *)matchingResolutionPresets {
-//    NSMutableArray *matches = [NSMutableArray array];
-//    if (pixelBuffer.data == nil || [pixelBuffer.data length] == 0) {
-//        return matches;
-//    }
-//
-//    for (NSDictionary *res in resolutions) {
-////        int w = [[res objectForKey:@"width"] intValue];
-////        int h = [[res objectForKey:@"height"] intValue];
 //        int pixCount = [[res objectForKey:@"pixels"] intValue];
 //
-//        BOOL match = NO;
-//        if (pixCount * 4 == [pixelBuffer.data length]) {
-//            match = YES;
-//        } else if (pixCount * 3 == [pixelBuffer.data length]) {
-//            match = YES;
-//        } else if (pixCount * 1 == [pixelBuffer.data length]) {
-//            match = YES;
-//        }
-//        if (match) {
-//            [matches addObject:res];
-//        }
+//                if (pixCount * 4 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGBA;
+//                } else if (pixCount * 3 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGB24;
+//                } else if (pixCount * 1 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGB8;
+//                } else {
+//                    continue;
+//                }
+//
+//        //        NSString *fmtName = [[PixelBuffer supportedFormats] objectAtIndex:*format];
+//        //        NSLog(@"Data length %d matches %d x %d format: %@", self.data.length, w, h, fmtName);
+//
 //    }
-//    return matches;
-//}
 //
-////- (BOOL)guessResolution:(NSSize *)outSize pixelFormat:(PixelFormat *)format {
-////    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
-////    NSArray *resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
-////
-////    for (NSDictionary *res in resolutions) {
-////        int w = [[res objectForKey:@"width"] intValue];
-////        int h = [[res objectForKey:@"height"] intValue];
-////        int pixCount = [[res objectForKey:@"pixels"] intValue];
-////
-////                if (pixCount * 4 == self.data.length) {
-////                    *format = PIXEL_FORMAT_RGBA;
-////                } else if (pixCount * 3 == self.data.length) {
-////                    *format = PIXEL_FORMAT_RGB24;
-////                } else if (pixCount * 1 == self.data.length) {
-////                    *format = PIXEL_FORMAT_RGB8;
-////                } else {
-////                    continue;
-////                }
-////
-////        //        NSString *fmtName = [[PixelBuffer supportedFormats] objectAtIndex:*format];
-////        //        NSLog(@"Data length %d matches %d x %d format: %@", self.data.length, w, h, fmtName);
-////
-////    }
-////
-////    return TRUE;
-////}
-//
-//- (void)loadResolutionsArray {
-//    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
-//    resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
+//    return TRUE;
 //}
+
+- (void)loadResolutionsArray {
+    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
+    resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
+}
 
 
 @end

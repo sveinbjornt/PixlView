@@ -15,8 +15,6 @@
 
 @interface PixelDocumentController : NSWindowController
 {
-    IBOutlet id fileIconImageView;
-    IBOutlet id filePathTextField;
     IBOutlet id fileMD5TextField;
     
     IBOutlet id presetPopupButton;

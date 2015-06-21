@@ -223,10 +223,32 @@
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="Y1H-JC-n9e"/>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="presetSelected:" target="-2" id="Goa-qJ-Ky6"/>
+                        </connections>
                     </popUpButton>
+                    <button verticalHuggingPriority="750" id="xBB-3D-eZ2">
+                        <rect key="frame" x="506" y="449" width="121" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Best fit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dah-Db-dah">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="bestFitButtonPressed:" target="-2" id="3WO-pv-d55"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="541" y="390"/>
         </window>
+        <button id="hS9-4L-PTF">
+            <rect key="frame" x="0.0" y="0.0" width="61" height="18"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RNn-bD-vA1">
+                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+        </button>
     </objects>
 </document>

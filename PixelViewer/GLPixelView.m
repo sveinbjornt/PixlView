@@ -17,7 +17,7 @@
 
 - (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale {
     
-    frameRect.size.width = frameRect.size.width * scale;
+    frameRect.size.width = frameRect.size.width * scale ;
     frameRect.size.height = frameRect.size.height * scale;
     if ((self = [super initWithFrame:frameRect pixelFormat:format])) {
         self.scale = scale;
@@ -101,8 +101,11 @@
     }
     
     
+    NSRect backingFrameRect = [self convertRectToBacking:[self bounds]];
+    glViewport(0, 0, backingFrameRect.size.width, backingFrameRect.size.height);
+//    NSLog(NSStringFromRect(self.bounds));
+//    NSLog(NSStringFromRect(backingFrameRect));
     
-    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -124,7 +127,7 @@
     
     
     
-        
+    
     
     
 //    [self drawPixelData];
