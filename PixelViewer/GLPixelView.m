@@ -30,8 +30,7 @@
     glDisable(GL_POINT_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
     glEnable(GL_BLEND);
-    
-//    [self createFramebuffer];
+    [self createTexture];
 }
 
 - (void)setPixelData:(NSData *)pixelData {
@@ -94,13 +93,14 @@
 
 
 - (void)drawRect:(NSRect)dirtyRect {
+    [[self openGLContext] makeCurrentContext];
     [super drawRect:dirtyRect];
     
     if (self.pixelData == nil) {
         return;
     }
     
-    [[self openGLContext] makeCurrentContext];
+    
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     
@@ -142,8 +142,6 @@
     // Draw texture
     
     if (texture) {
-
-        //glActiveTexture(texture);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture);
         
@@ -167,24 +165,14 @@
         glTexCoord2f(1.0f,1.0f);
         glVertex2f(x2,y2);
         
-    //    glTexCoord2f (0.0f, 0.0f);
-    //    glVertex2f (0.0f, 0.0f);
-    //    glTexCoord2f (x2, 0.0f);
-    //    glVertex2f (1.0f, 0.0f);
-    //    glTexCoord2f (x2, y2);
-    //    glVertex2f (1.0f, 1.0f);
-    //    glTexCoord2f (0.0f, y2);
-    //    glVertex2f (0.0f, 1.0f);
-
-        
         glEnd();
     }
-    
+
     [[self openGLContext] flushBuffer];
 }
 
 - (void)createTexture {
-    
+    [[self openGLContext] makeCurrentContext];
     
     if (texture) {
         glDeleteTextures(1, &texture);
@@ -192,6 +180,10 @@
     
     // The texture we're going to render to
     glGenTextures(1, &texture);
+    if (!texture) {
+        NSLog(@"Failed to create texture");
+        return;
+    }
     glBindTexture(GL_TEXTURE_2D, texture);
     
     int w = self.frame.size.width/self.scale;
