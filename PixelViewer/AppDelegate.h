@@ -16,10 +16,11 @@
 {
     IBOutlet id mainWindow;
     
-    IBOutlet NSImageView *fileIconImageView;
+    IBOutlet id fileIconImageView;
     IBOutlet id filePathTextField;
     IBOutlet id fileMD5TextField;
     
+    IBOutlet id presetPopupButton;
     IBOutlet id formatPopupButton;
     IBOutlet id widthTextField;
     IBOutlet id heightTextField;
@@ -36,6 +37,8 @@
     
     GLPixelView *glView;
     PixelBuffer *pixelBuffer;
+    
+    NSArray *resolutions;
 }
 
 @end

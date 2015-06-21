@@ -14,6 +14,8 @@
 
 - (void)awakeFromNib {
     
+    [self loadResolutionsArray];
+    
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
     CGFloat scale = 1.0f;
@@ -31,6 +33,7 @@
         [formatPopupButton addItemWithTitle:format];
     }
 
+    [self populatePresetPopupMenu];
 }
 
 #pragma mark - Control delegate
@@ -40,6 +43,21 @@
     glView.pixelData = [pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
     [self updateBufferInfo];
+}
+
+- (IBAction)presetSelected:(id)sender {
+    int index = (int)[presetPopupButton indexOfSelectedItem];
+    
+    NSDictionary *res = [resolutions objectAtIndex:index];
+    int w = [[res objectForKey:@"width"] intValue];
+    int h = [[res objectForKey:@"height"] intValue];
+    
+    [widthTextField setStringValue:[NSString stringWithFormat:@"%d", w]];
+    [heightTextField setStringValue:[NSString stringWithFormat:@"%d", h]];
+    
+    [self controlTextDidChange:nil];
+    
+//    NSLog([resolutions description]);
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -154,11 +172,12 @@
     
     pixelBuffer = [[PixelBuffer alloc] initWithContentsOfFile:filePath];
     pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+    
     glView.pixelData = [pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
     
     [offsetSlider setMaxValue:[pixelBuffer length]];
-    
+    [self populatePresetPopupMenu];
 }
 
 - (IBAction)selectFile:(id)sender {
@@ -202,5 +221,118 @@
     return [[outputStr componentsSeparatedByString:@" = "] objectAtIndex:1];
 }
 
+- (void)populatePresetPopupMenu {
+    
+    [presetPopupButton removeAllItems];
+    
+    NSArray *matches = [self matchingResolutionPresets];
+    
+    for (NSDictionary *res in resolutions) {
+        int w = [[res objectForKey:@"width"] intValue];
+        int h = [[res objectForKey:@"height"] intValue];
+        
+        NSString *presetName = [NSString stringWithFormat:@"%d x %d", w, h];
+        [presetPopupButton addItemWithTitle:presetName];
+    }
+    
+    
+    
+    NSArray *menuItems = [presetPopupButton itemArray];
+    for (NSMenuItem *menuItem in menuItems) {
+        
+        int index = (int)[presetPopupButton indexOfItem:menuItem];
+        NSDictionary *resInfoDict = [resolutions objectAtIndex:index];
+        
+        NSColor *resColor = [NSColor clearColor];
+        NSString *title = menuItem.title;
+        
+        // Check if match
+        PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
+        if (pixFmt != -1) {
+            resColor = [NSColor greenColor];
+            NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
+            title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
+        }
+        NSDictionary *textAttr = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  resColor, NSBackgroundColorAttributeName,
+                                  [NSFont systemFontOfSize: [NSFont systemFontSize]], NSFontAttributeName, nil];
+
+        
+        NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:title attributes:textAttr];
+        
+        [menuItem setAttributedTitle:attrTitle];
+    }
+}
+
+- (PixelFormat)pixelFormatMatchingResolution:(NSDictionary *)resInfoDict {
+    int pixelCount = [[resInfoDict objectForKey:@"pixels"] intValue];
+    
+    if (pixelCount * 4 == pixelBuffer.length) {
+        return PIXEL_FORMAT_RGBA;
+    } else if (pixelCount * 3 == pixelBuffer.length) {
+        return PIXEL_FORMAT_RGB24;
+    } else if (pixelCount * 1 == pixelBuffer.length) {
+        return PIXEL_FORMAT_RGB8;
+    }
+    return -1;
+}
+
+- (NSArray *)matchingResolutionPresets {
+    NSMutableArray *matches = [NSMutableArray array];
+    if (pixelBuffer.data == nil || [pixelBuffer.data length] == 0) {
+        return matches;
+    }
+    
+    for (NSDictionary *res in resolutions) {
+//        int w = [[res objectForKey:@"width"] intValue];
+//        int h = [[res objectForKey:@"height"] intValue];
+        int pixCount = [[res objectForKey:@"pixels"] intValue];
+        
+        BOOL match = NO;
+        if (pixCount * 4 == [pixelBuffer.data length]) {
+            match = YES;
+        } else if (pixCount * 3 == [pixelBuffer.data length]) {
+            match = YES;
+        } else if (pixCount * 1 == [pixelBuffer.data length]) {
+            match = YES;
+        }
+        if (match) {
+            [matches addObject:res];
+        }
+    }
+    return matches;
+}
+
+//- (BOOL)guessResolution:(NSSize *)outSize pixelFormat:(PixelFormat *)format {
+//    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
+//    NSArray *resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
+//    
+//    for (NSDictionary *res in resolutions) {
+//        int w = [[res objectForKey:@"width"] intValue];
+//        int h = [[res objectForKey:@"height"] intValue];
+//        int pixCount = [[res objectForKey:@"pixels"] intValue];
+//        
+//                if (pixCount * 4 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGBA;
+//                } else if (pixCount * 3 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGB24;
+//                } else if (pixCount * 1 == self.data.length) {
+//                    *format = PIXEL_FORMAT_RGB8;
+//                } else {
+//                    continue;
+//                }
+//        
+//        //        NSString *fmtName = [[PixelBuffer supportedFormats] objectAtIndex:*format];
+//        //        NSLog(@"Data length %d matches %d x %d format: %@", self.data.length, w, h, fmtName);
+//        
+//    }
+//    
+//    return TRUE;
+//}
+
+- (void)loadResolutionsArray {
+    NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
+    resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
+}
 
 @end

@@ -25,11 +25,11 @@ typedef enum : NSUInteger {
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;
 - (instancetype)initWithData:(NSData *)d;
-
+- (void)readResolutions;
 - (unsigned char *)bytes;
 - (int)length;
 + (NSArray *)supportedFormats;
 - (NSData *)toRGBA;
 - (int)expectedBitLengthForImageSize:(NSSize)size;
-
+- (BOOL)guessResolution:(NSSize *)outSize pixelFormat:(PixelFormat *)format;
 @end
