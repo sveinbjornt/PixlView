@@ -186,6 +186,9 @@
     
     [offsetSlider setMaxValue:[pixelBuffer length]];
     [self populatePresetPopupMenu];
+    [self updateBufferInfo];
+    
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:filePath]];
 }
 
 - (IBAction)selectFile:(id)sender {
