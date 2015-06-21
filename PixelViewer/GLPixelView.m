@@ -20,7 +20,7 @@
     glDisable(GL_POINT_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
     glEnable(GL_BLEND);
-    glPointSize(1.0f);
+    self.scale = 2.0f;
 
     return;
 }
@@ -67,15 +67,14 @@
     glLoadIdentity();
     
     glClear(GL_COLOR_BUFFER_BIT);
+
     
     [self drawPixelData];
     
-    glFlush();
     [[self openGLContext] flushBuffer];
 }
 
 - (void)drawPixelData {
-    
     
     if (!self.pixelData) {
         NSLog(@"No pixel data available");
@@ -87,7 +86,8 @@
     int width = self.frame.size.width;
     int height = self.frame.size.height;
     int stride = width * 4;
-    int i = 0;
+    
+    glPointSize(1.0f);
     
     // iterate over rgba buffer
     for (int y = 0; y < height; y++) {
@@ -98,15 +98,10 @@
             if (pos < length-3) {
                 
                 // read 4 components
-                unsigned char r = bytes[pos];
-                unsigned char g = bytes[pos+1];
-                unsigned char b = bytes[pos+2];
-                unsigned char a = bytes[pos+3];
-                
-                float rf = (float)r / 255;
-                float gf = (float)g / 255;
-                float bf = (float)b / 255;
-                float af = (float)a / 255;
+                float rf = (float)bytes[pos] / 255;
+                float gf = (float)bytes[pos+1] / 255;
+                float bf = (float)bytes[pos+2] / 255;
+                float af = (float)bytes[pos+3] / 255;
                 
                 glColor4f(rf,gf,bf,af);
                 
@@ -119,16 +114,16 @@
             glVertex2f(x, y);
             glEnd();
         }
-
-        
-        
     }
+
     
-    NSLog(@"Finished drawing");
-    
+
 }
 
-
+-(BOOL)isFlipped
+{
+    return YES;
+}
 
 
 

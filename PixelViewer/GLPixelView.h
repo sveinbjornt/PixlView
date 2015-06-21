@@ -13,5 +13,7 @@
     
 }
 @property (retain, atomic) NSData *pixelData;
+@property CGFloat scale;
+
 - (void)refresh;
 @end

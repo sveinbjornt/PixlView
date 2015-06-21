@@ -14,7 +14,6 @@
 		F4BECE4C1B348E50005FAD6C /* PixelViewerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE4B1B348E50005FAD6C /* PixelViewerTests.m */; };
 		F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE5C1B35B541005FAD6C /* GLPixelView.m */; };
 		F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE601B35B755005FAD6C /* CGPixelView.m */; };
-		F4BECE641B35C5B5005FAD6C /* BackingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE631B35C5B5005FAD6C /* BackingView.m */; };
 		F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE661B35D878005FAD6C /* PixelBuffer.m */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +42,6 @@
 		F4BECE5C1B35B541005FAD6C /* GLPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPixelView.m; sourceTree = "<group>"; };
 		F4BECE5F1B35B755005FAD6C /* CGPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPixelView.h; sourceTree = "<group>"; };
 		F4BECE601B35B755005FAD6C /* CGPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPixelView.m; sourceTree = "<group>"; };
-		F4BECE621B35C5B5005FAD6C /* BackingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackingView.h; sourceTree = "<group>"; };
-		F4BECE631B35C5B5005FAD6C /* BackingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackingView.m; sourceTree = "<group>"; };
 		F4BECE651B35D878005FAD6C /* PixelBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBuffer.h; sourceTree = "<group>"; };
 		F4BECE661B35D878005FAD6C /* PixelBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelBuffer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,8 +126,6 @@
 		F4BECE681B35E5B3005FAD6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F4BECE621B35C5B5005FAD6C /* BackingView.h */,
-				F4BECE631B35C5B5005FAD6C /* BackingView.m */,
 				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
 				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
 				F4BECE5F1B35B755005FAD6C /* CGPixelView.h */,
@@ -243,7 +238,6 @@
 				F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */,
 				F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */,
 				F4BECE381B348E4F005FAD6C /* main.m in Sources */,
-				F4BECE641B35C5B5005FAD6C /* BackingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
