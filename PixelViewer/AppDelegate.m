@@ -93,7 +93,7 @@
 }
 
 - (IBAction)scaleSliderValueChanged:(id)sender {
-    int perc = ([sender intValue] * 5);
+    int perc = ([scaleSlider intValue] * 5);
     glView.scale = (float)perc / 100;
     [scaleTextField setStringValue:[NSString stringWithFormat:@"%d%%", perc]];
 
@@ -154,6 +154,39 @@
 
     
     [bufferInfoTextField setAttributedStringValue:finalStr];
+}
+
+- (IBAction)decreaseScale:(id)sender {
+    [scaleSlider setIntValue:[scaleSlider intValue]-1 < 1 ? 1 : [scaleSlider intValue]-1];
+    [self scaleSliderValueChanged:nil];
+}
+
+- (IBAction)increaseScale:(id)sender {
+    [scaleSlider setIntValue:[scaleSlider intValue]+1];
+    [self scaleSliderValueChanged:nil];
+}
+
+- (IBAction)decreaseWidth:(id)sender {
+    int newWidth = [[widthTextField stringValue] intValue]-1 < 0 ? 0 : [[widthTextField stringValue] intValue]-1;
+    [widthTextField setStringValue:[NSString stringWithFormat:@"%d", newWidth]];
+    [self controlTextDidChange:nil];
+}
+
+- (IBAction)increaseWidth:(id)sender {
+    [widthTextField setStringValue:[NSString stringWithFormat:@"%d", [[widthTextField stringValue] intValue]+1]];
+    [self controlTextDidChange:nil];
+}
+
+- (IBAction)decreaseHeight:(id)sender {
+    int newHeight = [[heightTextField stringValue] intValue]-1 < 0 ? 0 : [[heightTextField stringValue] intValue]-1;
+    [heightTextField setStringValue:[NSString stringWithFormat:@"%d", newHeight]];
+    [self controlTextDidChange:nil];
+}
+
+- (IBAction)increaseHeight:(id)sender {
+    [heightTextField setStringValue:[NSString stringWithFormat:@"%d", [[heightTextField stringValue] intValue]+1]];
+    [self controlTextDidChange:nil];
+
 }
 
 #pragma mark - NSApplicationDelegate
@@ -231,6 +264,8 @@
     NSString *outputStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     return [[outputStr componentsSeparatedByString:@" = "] objectAtIndex:1];
 }
+
+#pragma mark - Resolution presets
 
 - (void)populatePresetPopupMenu {
     

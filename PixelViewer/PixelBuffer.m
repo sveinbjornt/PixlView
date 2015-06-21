@@ -24,6 +24,8 @@
     return self;
 }
 
+#pragma mark - Info
+
 - (unsigned char *)bytes {
     return (unsigned char *)([self.data bytes] + self.offset);
 }
