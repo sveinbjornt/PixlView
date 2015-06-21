@@ -51,13 +51,21 @@
     NSDictionary *res = [resolutions objectAtIndex:index];
     int w = [[res objectForKey:@"width"] intValue];
     int h = [[res objectForKey:@"height"] intValue];
+    PixelFormat pixFmt = [self pixelFormatMatchingResolution:res];
     
     [widthTextField setStringValue:[NSString stringWithFormat:@"%d", w]];
     [heightTextField setStringValue:[NSString stringWithFormat:@"%d", h]];
     
+    if (pixFmt != -1) {
+        [formatPopupButton selectItemAtIndex:pixFmt];
+        [self pixelFormatChanged:nil];
+    }
+    
+    
     [self controlTextDidChange:nil];
     
-//    NSLog([resolutions description]);
+    
+    
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
