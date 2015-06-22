@@ -41,14 +41,23 @@
 
     // Populate presets menu
     [fileMD5TextField setStringValue:[self md5hashForFileAtPath:self.doc.filePath]];
-
-    self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+    
+    // Guess pixel format from suffix
+    PixelFormat pixFmt = [PixelBuffer pixelFormatForSuffix:[self.doc.filePath pathExtension]];
+    if ((NSInteger)pixFmt != -1) {
+        self.doc.pixelBuffer.pixelFormat = pixFmt;
+        [formatPopupButton selectItemAtIndex:pixFmt];
+    } else {
+        self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+    }
     glView.pixelData = [self.doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
     
     [offsetSlider setMaxValue:[self.doc.pixelBuffer length]];
     [self populatePresetPopupMenu];
-    [self updateBufferInfo];
+    [self updateBufferInfoTextField];
+    
+    //[self loadBestPreset];
     
 }
 
@@ -60,7 +69,7 @@
     self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
     glView.pixelData = [self.doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
-    [self updateBufferInfo];
+    [self updateBufferInfoTextField];
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -85,8 +94,45 @@
 
     glView.frame = NSMakeRect(0, 0, width, height);
     [glView setNeedsDisplay:YES];
-    [self updateBufferInfo];
+    [self updateBufferInfoTextField];
 }
+
+- (void)updateBufferInfoTextField {
+    int width = [[widthTextField stringValue] intValue];
+    int height = [[heightTextField stringValue] intValue];
+    
+    PixelDocument *doc = self.document;
+    int fileDataLength = [doc.pixelBuffer length];
+    int bufferSize = [doc.pixelBuffer expectedBitLengthForImageSize:NSMakeSize(width, height)] / 8;
+    
+    NSString *bufferInfoString = [NSString stringWithFormat:
+                                  @"Data in: %d    Buffer out: %d   Diff: %@%d   ",
+                                  fileDataLength,
+                                  bufferSize,
+                                  fileDataLength-bufferSize > 0 ? @"+" : @"",
+                                  fileDataLength-bufferSize
+                                  ];
+    
+    NSString *msg = fileDataLength-bufferSize > 0 ? @"Buffer smaller than source data" : @"Buffer larger than source data";
+    NSColor *color = fileDataLength-bufferSize > 0 ? [NSColor orangeColor] : [NSColor redColor];
+    if (fileDataLength-bufferSize == 0) {
+        msg = @"Buffer size == source data size";
+        color = [NSColor greenColor];
+    }
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:msg];
+    [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,string.length)];
+    
+    
+    NSMutableAttributedString *finalStr = [[NSMutableAttributedString alloc] initWithString:bufferInfoString attributes:nil];
+    [finalStr appendAttributedString:string];
+    
+    
+    [bufferInfoTextField setAttributedStringValue:finalStr];
+}
+
+
+#pragma mark - Slider actions
 
 - (IBAction)scaleSliderValueChanged:(id)sender {
     int perc = ([scaleSlider intValue] * 5);
@@ -119,43 +165,10 @@
     doc.pixelBuffer.offset = [sender intValue];
     glView.pixelData = [doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
-    [self updateBufferInfo];
-
+    [self updateBufferInfoTextField];
 }
 
-- (void)updateBufferInfo {
-    int width = [[widthTextField stringValue] intValue];
-    int height = [[heightTextField stringValue] intValue];
-
-    PixelDocument *doc = self.document;
-    int fileDataLength = [doc.pixelBuffer length];
-    int bufferSize = [doc.pixelBuffer expectedBitLengthForImageSize:NSMakeSize(width, height)] / 8;
-
-    NSString *bufferInfoString = [NSString stringWithFormat:
-                                  @"Data in: %d    Buffer out: %d   Diff: %@%d   ",
-                                  fileDataLength,
-                                  bufferSize,
-                                  fileDataLength-bufferSize > 0 ? @"+" : @"",
-                                  fileDataLength-bufferSize
-                                  ];
-
-    NSString *msg = fileDataLength-bufferSize > 0 ? @"Source too large" : @"Source too small";
-    NSColor *color = fileDataLength-bufferSize > 0 ? [NSColor greenColor] : [NSColor orangeColor];
-    if (fileDataLength-bufferSize == 0) {
-        msg = @"Source matches";
-        color = [NSColor greenColor];
-    }
-
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:msg];
-    [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,string.length)];
-
-
-    NSMutableAttributedString *finalStr = [[NSMutableAttributedString alloc] initWithString:bufferInfoString attributes:nil];
-    [finalStr appendAttributedString:string];
-
-
-    [bufferInfoTextField setAttributedStringValue:finalStr];
-}
+#pragma mark - Menu-based slider control
 
 - (IBAction)decreaseScale:(id)sender {
     [scaleSlider setIntValue:[scaleSlider intValue]-1 < 1 ? 1 : [scaleSlider intValue]-1];
@@ -190,16 +203,22 @@
 
 }
 
-#pragma mark -
+#pragma mark - Presets
 
 - (IBAction)bestFitButtonPressed:(id)sender {
+    if ([self loadBestPreset] == NO) {
+        NSBeep();
+    }
+}
+
+- (BOOL)loadBestPreset {
     NSDictionary *res = [self bestPreset];
     if (res != nil) {
         int index = (int)[resolutions indexOfObject:res];
         [self loadPreset:[resolutions objectAtIndex:index]];
-    } else {
-        NSBeep();
+        return YES;
     }
+    return NO;
 }
 
 - (IBAction)presetSelected:(id)sender {
@@ -223,7 +242,7 @@
     [widthTextField setStringValue:[NSString stringWithFormat:@"%d", w]];
     [heightTextField setStringValue:[NSString stringWithFormat:@"%d", h]];
     
-    if (pixFmt != -1) {
+    if ((NSUInteger)pixFmt != -1) {
         [formatPopupButton selectItemAtIndex:pixFmt];
         [self pixelFormatChanged:nil];
     }
@@ -265,8 +284,6 @@
 
     [presetPopupButton removeAllItems];
 
-    NSArray *matches = [self matchingResolutionPresets];
-
     for (NSDictionary *res in resolutions) {
         int w = [[res objectForKey:@"width"] intValue];
         int h = [[res objectForKey:@"height"] intValue];
@@ -288,7 +305,7 @@
 
         // Check if match
         PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
-        if (pixFmt != -1) {
+        if ((NSUInteger)pixFmt != -1) {
             resColor = [NSColor greenColor];
             NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
             title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
@@ -327,7 +344,7 @@
 //        int w = [[res objectForKey:@"width"] intValue];
 //        int h = [[res objectForKey:@"height"] intValue];
         int pixCount = [[res objectForKey:@"pixels"] intValue];
-        int docDataLength = [self.doc.pixelBuffer.data length];
+        int docDataLength = (int)[self.doc.pixelBuffer.data length];
         BOOL match = NO;
         if (pixCount * 4 == docDataLength) {
             match = YES;

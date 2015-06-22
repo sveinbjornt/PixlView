@@ -16,7 +16,6 @@
 		F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3C1B348E4F005FAD6C /* Images.xcassets */; };
 		F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */; };
 		F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE5C1B35B541005FAD6C /* GLPixelView.m */; };
-		F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE601B35B755005FAD6C /* CGPixelView.m */; };
 		F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE661B35D878005FAD6C /* PixelBuffer.m */; };
 /* End PBXBuildFile section */
 
@@ -36,8 +35,6 @@
 		F4BECE3F1B348E4F005FAD6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F4BECE5B1B35B541005FAD6C /* GLPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPixelView.h; sourceTree = "<group>"; };
 		F4BECE5C1B35B541005FAD6C /* GLPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPixelView.m; sourceTree = "<group>"; };
-		F4BECE5F1B35B755005FAD6C /* CGPixelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPixelView.h; sourceTree = "<group>"; };
-		F4BECE601B35B755005FAD6C /* CGPixelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPixelView.m; sourceTree = "<group>"; };
 		F4BECE651B35D878005FAD6C /* PixelBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelBuffer.h; sourceTree = "<group>"; };
 		F4BECE661B35D878005FAD6C /* PixelBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixelBuffer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,32 +79,22 @@
 				F4BECE661B35D878005FAD6C /* PixelBuffer.m */,
 				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
 				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
-				F4BECE681B35E5B3005FAD6C /* Views */,
-				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
-				F46AB9691B375BED00CEB288 /* PixelDocument.xib */,
-				F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */,
-				F4BECE351B348E4F005FAD6C /* Supporting Files */,
+				F4BECE351B348E4F005FAD6C /* Resources */,
 			);
 			path = PixelViewer;
 			sourceTree = "<group>";
 		};
-		F4BECE351B348E4F005FAD6C /* Supporting Files */ = {
+		F4BECE351B348E4F005FAD6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
+				F46AB9691B375BED00CEB288 /* PixelDocument.xib */,
+				F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */,
 				F46AB9351B3738AB00CEB288 /* resolutions.plist */,
 				F4BECE361B348E4F005FAD6C /* Info.plist */,
 				F4BECE371B348E4F005FAD6C /* main.m */,
 			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F4BECE681B35E5B3005FAD6C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F4BECE5F1B35B755005FAD6C /* CGPixelView.h */,
-				F4BECE601B35B755005FAD6C /* CGPixelView.m */,
-			);
-			name = Views;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F46AB9681B375BD800CEB288 /* PixelDocument.m in Sources */,
-				F4BECE611B35B755005FAD6C /* CGPixelView.m in Sources */,
 				F4BECE5D1B35B541005FAD6C /* GLPixelView.m in Sources */,
 				F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */,
 				F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */,

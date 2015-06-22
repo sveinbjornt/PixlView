@@ -35,11 +35,24 @@
 }
 
 + (NSArray *)supportedFormats {
-    return [NSArray arrayWithObjects:@"RGBA",
-                                     @"RGB24",
-                                     @"RGB8",
+    return [NSArray arrayWithObjects:@"RGBA (32bpp)",
+                                     @"RGB (24bpp)",
+                                     @"RGB8 (8bpp)",
                                      //@"YUV420p",
                                     nil];
+}
+
++ (PixelFormat)pixelFormatForSuffix:(NSString *)suffix {
+    if ([suffix isEqualToString:@"rgba"]) {
+        return PIXEL_FORMAT_RGBA;
+    } else if ([suffix isEqualToString:@"rgb"]) {
+        return PIXEL_FORMAT_RGB24;
+    } else if ([suffix isEqualToString:@"rgb8"]) {
+        return PIXEL_FORMAT_RGB8;
+    } else if ([suffix isEqualToString:@"yuv"] || [suffix isEqualToString:@"yuv420p"]) {
+        return PIXEL_FORMAT_YUV420P;
+    }
+    return -1;
 }
 
 #pragma mark - Pixel format conversion routines

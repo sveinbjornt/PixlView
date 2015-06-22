@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+typedef enum : NSInteger {
     PIXEL_FORMAT_RGBA,
     PIXEL_FORMAT_RGB24,
     PIXEL_FORMAT_RGB8,
@@ -25,11 +25,14 @@ typedef enum : NSUInteger {
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;
 - (instancetype)initWithData:(NSData *)d;
-- (void)readResolutions;
+
 - (unsigned char *)bytes;
 - (int)length;
+
++ (PixelFormat)pixelFormatForSuffix:(NSString *)suffix;
 + (NSArray *)supportedFormats;
+
 - (NSData *)toRGBA;
 - (int)expectedBitLengthForImageSize:(NSSize)size;
-- (BOOL)guessResolution:(NSSize *)outSize pixelFormat:(PixelFormat *)format;
+
 @end

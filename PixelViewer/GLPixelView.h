@@ -13,7 +13,7 @@
     GLuint framebuffer;
     GLuint texture;
 }
-@property (retain, atomic) NSData *pixelData;
+@property (retain, nonatomic) NSData *pixelData;
 @property CGFloat scale;
 
 - (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale;
