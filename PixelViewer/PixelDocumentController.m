@@ -15,10 +15,6 @@
     
     self.doc = self.document;
 
-    [self loadResolutionsArray];
-
-
-    
     // Create GL view and add to scroll view
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
@@ -32,6 +28,8 @@
     [glView setWantsBestResolutionOpenGLSurface:YES];
     [pixelScrollView setDocumentView:glView];
 
+    // Offset can never be greater than file length
+    [offsetSlider setMaxValue:[self.doc.pixelBuffer length]];
     
     // Populate pixel format popup
     [formatPopupButton removeAllItems];
@@ -40,7 +38,11 @@
     }
 
     // Populate presets menu
+    [self loadResolutionsArray];
+    [self populatePresetPopupMenu];
+
     [fileMD5TextField setStringValue:[self md5hashForFileAtPath:self.doc.filePath]];
+    
     
     // Guess pixel format from suffix
     PixelFormat pixFmt = [PixelBuffer pixelFormatForSuffix:[self.doc.filePath pathExtension]];
@@ -49,15 +51,14 @@
         [formatPopupButton selectItemAtIndex:pixFmt];
     } else {
         self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
+        [self loadBestPreset];
     }
+    
+    // Attach rgba representation of pixel data to gl view
     glView.pixelData = [self.doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
     
-    [offsetSlider setMaxValue:[self.doc.pixelBuffer length]];
-    [self populatePresetPopupMenu];
     [self updateBufferInfoTextField];
-    
-    //[self loadBestPreset];
     
 }
 
