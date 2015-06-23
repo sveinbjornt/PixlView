@@ -105,7 +105,11 @@
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"BackgroundColor"]];
+    NSColor *color = [NSColor redColor];
+    id colorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"BufferOverflowColor"];
+    if (colorData) {
+        color = [NSUnarchiver unarchiveObjectWithData:colorData];
+    }
     glClearColor(color.redComponent, color.greenComponent, color.blueComponent, color.alphaComponent);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -277,6 +281,8 @@
     NSInteger clickCount = [event clickCount];
     if (2 == clickCount) {
         [self.delegate glPixelViewDoubleClicked:event];
+    } else {
+        [self.delegate glPixelViewClicked:event];
     }
 }
 
@@ -287,9 +293,6 @@
 {
     return YES;
 }
-
-
-
 
 
 

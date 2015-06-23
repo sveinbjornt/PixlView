@@ -10,6 +10,7 @@
 
 @protocol GLPixelViewDelegate <NSObject>
 - (void)glPixelViewDoubleClicked:(NSEvent *)event;
+- (void)glPixelViewClicked:(NSEvent *)event;
 @end
 
 @interface GLPixelView : NSOpenGLView

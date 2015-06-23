@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F40068681B3A0AAA00961B42 /* small-zoom-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = F40068661B3A0AAA00961B42 /* small-zoom-cursor.png */; };
+		F40068691B3A0AAA00961B42 /* small-zoom-in-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = F40068671B3A0AAA00961B42 /* small-zoom-in-cursor.png */; };
+		F400686D1B3A0CB900961B42 /* ZoomableClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F400686C1B3A0CB900961B42 /* ZoomableClipView.m */; };
 		F46AB9361B3738AB00CEB288 /* resolutions.plist in Resources */ = {isa = PBXBuildFile; fileRef = F46AB9351B3738AB00CEB288 /* resolutions.plist */; };
 		F46AB9681B375BD800CEB288 /* PixlDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = F46AB9671B375BD800CEB288 /* PixlDoc.m */; };
 		F46AB96B1B375BED00CEB288 /* PixlDoc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46AB9691B375BED00CEB288 /* PixlDoc.xib */; };
@@ -21,6 +24,11 @@
 
 /* Begin PBXFileReference section */
 		F40068601B38CE6500961B42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PixlDoc.strings; sourceTree = "<group>"; };
+		F40068651B3A049800961B42 /* IDEAS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = IDEAS.txt; path = ../pixlview/IDEAS.txt; sourceTree = "<group>"; };
+		F40068661B3A0AAA00961B42 /* small-zoom-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "small-zoom-cursor.png"; path = "../../pixlview/PixlView/images/small-zoom-cursor.png"; sourceTree = "<group>"; };
+		F40068671B3A0AAA00961B42 /* small-zoom-in-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "small-zoom-in-cursor.png"; path = "../../pixlview/PixlView/images/small-zoom-in-cursor.png"; sourceTree = "<group>"; };
+		F400686B1B3A0CB900961B42 /* ZoomableClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZoomableClipView.h; path = ../../pixlview/PixlView/ZoomableClipView.h; sourceTree = "<group>"; };
+		F400686C1B3A0CB900961B42 /* ZoomableClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZoomableClipView.m; path = ../../pixlview/PixlView/ZoomableClipView.m; sourceTree = "<group>"; };
 		F46AB9351B3738AB00CEB288 /* resolutions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = resolutions.plist; sourceTree = "<group>"; };
 		F46AB9661B375BD800CEB288 /* PixlDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixlDoc.h; sourceTree = "<group>"; };
 		F46AB9671B375BD800CEB288 /* PixlDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixlDoc.m; sourceTree = "<group>"; };
@@ -51,9 +59,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F400686A1B3A0AB600961B42 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F40068661B3A0AAA00961B42 /* small-zoom-cursor.png */,
+				F40068671B3A0AAA00961B42 /* small-zoom-in-cursor.png */,
+				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		F4BECE291B348E4F005FAD6C = {
 			isa = PBXGroup;
 			children = (
+				F40068651B3A049800961B42 /* IDEAS.txt */,
 				F4BECE341B348E4F005FAD6C /* PixlView */,
 				F4BECE331B348E4F005FAD6C /* Products */,
 			);
@@ -80,6 +99,8 @@
 				F4BECE661B35D878005FAD6C /* PixelBuffer.m */,
 				F4BECE5B1B35B541005FAD6C /* GLPixelView.h */,
 				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
+				F400686B1B3A0CB900961B42 /* ZoomableClipView.h */,
+				F400686C1B3A0CB900961B42 /* ZoomableClipView.m */,
 				F4BECE351B348E4F005FAD6C /* Resources */,
 			);
 			path = PixlView;
@@ -88,7 +109,7 @@
 		F4BECE351B348E4F005FAD6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
+				F400686A1B3A0AB600961B42 /* Images */,
 				F46AB9691B375BED00CEB288 /* PixlDoc.xib */,
 				F4BECE3E1B348E4F005FAD6C /* MainMenu.xib */,
 				F46AB9351B3738AB00CEB288 /* resolutions.plist */,
@@ -158,7 +179,9 @@
 				F46AB96B1B375BED00CEB288 /* PixlDoc.xib in Resources */,
 				F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */,
 				F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */,
+				F40068681B3A0AAA00961B42 /* small-zoom-cursor.png in Resources */,
 				F46AB9361B3738AB00CEB288 /* resolutions.plist in Resources */,
+				F40068691B3A0AAA00961B42 /* small-zoom-in-cursor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +197,7 @@
 				F4BECE671B35D878005FAD6C /* PixelBuffer.m in Sources */,
 				F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */,
 				F46AB96E1B375DB300CEB288 /* PixlDocWindowController.m in Sources */,
+				F400686D1B3A0CB900961B42 /* ZoomableClipView.m in Sources */,
 				F4BECE381B348E4F005FAD6C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

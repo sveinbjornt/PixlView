@@ -255,14 +255,14 @@ DQ
         </menu>
         <window title="PixlView Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="85y-Y9-fFe" userLabel="Preferences">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="120" y="440" width="309" height="189"/>
+            <rect key="contentRect" x="120" y="440" width="309" height="208"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="a3m-Tz-lDf">
-                <rect key="frame" x="0.0" y="0.0" width="309" height="189"/>
+                <rect key="frame" x="0.0" y="-5" width="309" height="208"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button id="o5F-qS-i11">
-                        <rect key="frame" x="18" y="115" width="260" height="18"/>
+                        <rect key="frame" x="18" y="107" width="260" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Draw using antialiasing (GL_NEAREST)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rl5-m4-LrX">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -277,7 +277,7 @@ DQ
                         </connections>
                     </button>
                     <button id="iAz-aa-79f">
-                        <rect key="frame" x="18" y="91" width="260" height="18"/>
+                        <rect key="frame" x="18" y="83" width="260" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Reload if source document changes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jdV-1p-mu9">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -292,11 +292,11 @@ DQ
                         </connections>
                     </button>
                     <colorWell id="NtW-6M-0co">
-                        <rect key="frame" x="20" y="146" width="44" height="23"/>
+                        <rect key="frame" x="20" y="138" width="44" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
-                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.BackgroundColor" id="LB0-Ho-9mS">
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.BufferOverflowColor" id="nLJ-Ui-g8l">
                                 <dictionary key="options">
                                     <bool key="NSValidatesImmediately" value="YES"/>
                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -305,16 +305,16 @@ DQ
                         </connections>
                     </colorWell>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="m8O-MZ-0us">
-                        <rect key="frame" x="70" y="149" width="157" height="17"/>
+                        <rect key="frame" x="70" y="141" width="135" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Buffer background color" id="TYM-jV-jdX">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Buffer overflow color" id="TYM-jV-jdX">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="guG-sJ-038">
-                        <rect key="frame" x="200" y="21" width="95" height="32"/>
+                        <rect key="frame" x="200" y="13" width="95" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a5Z-SZ-COF">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -328,7 +328,7 @@ DQ
                         </connections>
                     </button>
                     <button id="s5d-7F-yGQ">
-                        <rect key="frame" x="18" y="67" width="273" height="18"/>
+                        <rect key="frame" x="18" y="59" width="273" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Use native retina GL backing if available" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="BFU-Eq-ulg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -342,9 +342,31 @@ DQ
                             </binding>
                         </connections>
                     </button>
+                    <colorWell id="AbZ-DV-7Ld">
+                        <rect key="frame" x="20" y="169" width="44" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.BackgroundColor" id="imk-aX-KNE">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                    <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </colorWell>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ryG-k6-VgY">
+                        <rect key="frame" x="70" y="172" width="178" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Background color" id="6Nw-b4-0Ke">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="568.5" y="656.5"/>
+            <point key="canvasLocation" x="653.5" y="600"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="igo-zw-0Lo"/>
     </objects>

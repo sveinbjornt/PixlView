@@ -16,21 +16,8 @@
     self.doc = self.document;
     presetIndex = -1;
 
-    // Create GL view and add to scroll view
-    int width = [[widthTextField stringValue] intValue];
-    int height = [[heightTextField stringValue] intValue];
-    CGFloat scale = 1.0f;
-    NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = { 0 };
-    NSRect glFrame = NSMakeRect(0, 0, width, height);
-    glView = [[GLPixelView alloc] initWithFrame:glFrame
-                                    pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
-                                          scale:scale];
-    glView.autoresizingMask = NSViewNotSizable;
-    glView.delegate = self;
-    BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
-    [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
-    [pixelScrollView setDocumentView:glView];
-
+    [self createGLPixelView];
+    
     // Offset can never be greater than file length
     [offsetSlider setMaxValue:[self.doc.pixelBuffer length]];
     
@@ -45,7 +32,6 @@
     [self populatePresetPopupMenu];
 
     [fileMD5TextField setStringValue:[self md5hashForFileAtPath:self.doc.filePath]];
-    
     
     // Guess pixel format from suffix
     PixelFormat pixFmt = [PixelBuffer pixelFormatForSuffix:[self.doc.filePath pathExtension]];
@@ -65,6 +51,21 @@
     
 }
 
+- (void)createGLPixelView {
+    int width = [[widthTextField stringValue] intValue];
+    int height = [[heightTextField stringValue] intValue];
+    CGFloat scale = 1.0f;
+    NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = { 0 };
+    NSRect glFrame = NSMakeRect(0, 0, width, height);
+    glView = [[GLPixelView alloc] initWithFrame:glFrame
+                                    pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
+                                          scale:scale];
+    glView.autoresizingMask = NSViewNotSizable;
+    glView.delegate = self;
+    BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
+    [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
+    [pixelScrollView setDocumentView:glView];
+}
 
 #pragma mark - Control delegate
 
@@ -283,7 +284,14 @@
 #pragma mark - GLPixelViewDelegate
 
 - (void)glPixelViewDoubleClicked:(NSEvent *)event {
-    [self scaleToActualSize:self];
+    //[self scaleToActualSize:self];
+    [self increaseScale:self];
+    [self increaseScale:self];
+}
+
+- (void)glPixelViewClicked:(NSEvent *)event {
+    [self increaseScale:self];
+    [self increaseScale:self];
 }
 
 
