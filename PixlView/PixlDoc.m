@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Sveinbjorn Thordarson. All rights reserved.
 //
 
-#import "PixelDocument.h"
+#import "PixlDoc.h"
 
-@implementation PixelDocument
+@implementation PixlDoc
 
 - (instancetype)init {
     self = [super init];
@@ -19,9 +19,9 @@
 }
 
 //Lazy instantiation of window controller
-- (PixelDocumentController *)controller {
+- (PixlDocWindowController *)controller {
     if (!_controller) {
-        _controller = [[PixelDocumentController alloc] initWithWindowNibName:@"PixelDocument"];
+        _controller = [[PixlDocWindowController alloc] initWithWindowNibName:@"PixlDoc"];
     }
     return _controller;
 }

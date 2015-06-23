@@ -7,15 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PixelDocumentController.h"
+#import "PixlDocWindowController.h"
 #import "PixelBuffer.h"
 
-@class PixelDocumentController;
-@interface PixelDocument : NSDocument
+@class PixlDocWindowController;
+@interface PixlDoc : NSDocument
 {
     
 }
-@property (retain, nonatomic) PixelDocumentController *controller;
+@property (retain, nonatomic) PixlDocWindowController *controller;
 @property (retain, nonatomic) PixelBuffer *pixelBuffer;
 @property (retain, nonatomic) NSString *filePath;
 @end

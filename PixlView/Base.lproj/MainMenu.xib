@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
+        <deployment defaultVersion="1070" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
     </dependencies>
     <objects>
@@ -11,28 +12,26 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" numberStyle="percent" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="309" id="27k-0Z-HQb" userLabel="Percentage Formatter">
-            <integer key="multiplier" value="100"/>
-        </numberFormatter>
-        <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="X9x-Jp-bVC">
-            <real key="minimum" value="0.0"/>
-        </numberFormatter>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="PixelViewer" id="1Xt-HY-uBw">
+                <menuItem title="PixlView" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="PixelViewer" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="PixlView" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About PixelViewer" id="5kV-Vb-QxS">
+                            <menuItem title="About PixlView" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="makeKeyAndOrderFront:" target="85y-Y9-fFe" id="T4R-ML-Kb1"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -93,7 +92,11 @@
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export" keyEquivalent="E" id="e3O-rP-LwJ"/>
+                            <menuItem title="Export" keyEquivalent="E" id="e3O-rP-LwJ">
+                                <connections>
+                                    <action selector="export:" target="-1" id="s4G-Zq-Zbw"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
                             <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
@@ -166,35 +169,49 @@
                         <items>
                             <menuItem title="Decrease Scale" keyEquivalent="-" id="PgW-xg-Vkp">
                                 <connections>
-                                    <action selector="decreaseScale:" target="Voe-Tx-rLC" id="KVt-2A-131"/>
+                                    <action selector="decreaseScale:" target="-1" id="U5J-TB-mvK"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Increase Scale" keyEquivalent="+" id="2Nd-uh-r7h">
                                 <connections>
-                                    <action selector="increaseScale:" target="Voe-Tx-rLC" id="oSf-Wb-w5T"/>
+                                    <action selector="increaseScale:" target="-1" id="V0m-Lp-mie"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="vmm-sF-bKk"/>
                             <menuItem title="Increase Width" keyEquivalent="" id="U9C-0n-bUY">
                                 <connections>
-                                    <action selector="increaseWidth:" target="Voe-Tx-rLC" id="AHr-Zx-XS7"/>
+                                    <action selector="increaseWidth:" target="-1" id="8xj-9H-IxO"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Decrease Width" keyEquivalent="" id="m4X-g9-9Dn">
                                 <connections>
-                                    <action selector="decreaseWidth:" target="Voe-Tx-rLC" id="CIH-FQ-339"/>
+                                    <action selector="decreaseWidth:" target="-1" id="DUx-UC-H1u"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="GqN-Z7-PWT"/>
                             <menuItem title="Increase Height" keyEquivalent="" id="XbC-yC-fdJ">
                                 <connections>
-                                    <action selector="increaseHeight:" target="Voe-Tx-rLC" id="7Ap-fZ-Zax"/>
+                                    <action selector="increaseHeight:" target="-1" id="CWz-a5-7H4"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Decrease Height" keyEquivalent="" id="g1M-Ux-MvR">
                                 <connections>
-                                    <action selector="decreaseHeight:" target="Voe-Tx-rLC" id="K8B-CO-DjX"/>
+                                    <action selector="decreaseHeight:" target="-1" id="Sbr-I4-ldn"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="uFB-v4-rIP"/>
+                            <menuItem title="Best fit" id="1I2-GY-VN0">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="bestFitButtonPressed:" target="-1" id="h2A-KK-8Wh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Resolution Presets" id="ssl-l1-F8C">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Resolution Presets" id="oMF-4k-GiD"/>
                             </menuItem>
                         </items>
                     </menu>
@@ -230,5 +247,99 @@
                 </menuItem>
             </items>
         </menu>
+        <window title="PixlView Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="85y-Y9-fFe" userLabel="Preferences">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <rect key="contentRect" x="120" y="440" width="309" height="189"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="a3m-Tz-lDf">
+                <rect key="frame" x="0.0" y="0.0" width="309" height="189"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button id="o5F-qS-i11">
+                        <rect key="frame" x="18" y="115" width="260" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Draw using antialiasing (GL_NEAREST)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rl5-m4-LrX">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.UseAntialiasing" id="Nlm-mf-5al">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <button id="iAz-aa-79f">
+                        <rect key="frame" x="18" y="91" width="260" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Reload if source document changes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jdV-1p-mu9">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.ReloadIfSourceDocumentChanges" id="BPK-Ni-WhB">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <colorWell id="NtW-6M-0co">
+                        <rect key="frame" x="20" y="146" width="44" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.BackgroundColor" id="LB0-Ho-9mS">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                    <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </colorWell>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="m8O-MZ-0us">
+                        <rect key="frame" x="70" y="149" width="157" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Buffer background color" id="TYM-jV-jdX">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="guG-sJ-038">
+                        <rect key="frame" x="200" y="21" width="95" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a5Z-SZ-COF">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="performClose:" target="85y-Y9-fFe" id="PrB-uy-xke"/>
+                        </connections>
+                    </button>
+                    <button id="s5d-7F-yGQ">
+                        <rect key="frame" x="18" y="67" width="273" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Use native retina GL backing if available" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="BFU-Eq-ulg">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="igo-zw-0Lo" name="value" keyPath="values.UseRetinaBacking" id="ieW-fA-dl4">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="568.5" y="656.5"/>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="igo-zw-0Lo"/>
     </objects>
 </document>

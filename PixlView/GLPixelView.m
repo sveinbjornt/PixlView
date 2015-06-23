@@ -33,6 +33,8 @@
     [self createTexture];
 }
 
+#pragma mark -
+
 - (void)setPixelData:(NSData *)pixelData {
     _pixelData = pixelData;
     [self createTexture];
@@ -42,33 +44,10 @@
     frameRect.size.width = frameRect.size.width * self.scale;
     frameRect.size.height = frameRect.size.height * self.scale;
     [super setFrame:frameRect];
-    [self createTexture];
+    //[self createTexture];
 }
 
-//- (void)createFramebuffer {
-//    glGenFramebuffers(1, &framebuffer);
-//    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-//    
-//    // The texture we're going to render to
-//    glGenTextures(1, &texture);
-//    glBindTexture(GL_TEXTURE_2D, texture);
-//    
-//    // Give an empty image to OpenGL
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, self.frame.size.width, self.frame.size.height, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//    
-//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
-//    
-//    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-//        NSLog(@"Framebuffer failed");
-//    
-//    // unbind
-//    glBindTexture(GL_TEXTURE_2D, 0);
-//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//
-//}
-
+#pragma mark -
 
 - (void)reshape {
 //    [[self openGLContext] update];
@@ -101,8 +80,18 @@
     }
     
     
-    NSRect backingFrameRect = [self convertRectToBacking:[self bounds]];
-    glViewport(0, 0, backingFrameRect.size.width, backingFrameRect.size.height);
+    NSRect backingFrameRect = [self bounds];
+    if (self.wantsBestResolutionOpenGLSurface) {
+        backingFrameRect = [self convertRectToBacking:[self bounds]];
+    }
+    
+    int maxSize;
+    glGetIntegerv(GL_MAX_VIEWPORT_DIMS, &maxSize);
+    
+    int vpw = backingFrameRect.size.width > maxSize ? maxSize : backingFrameRect.size.width;
+    int vph = backingFrameRect.size.height > maxSize ? maxSize : backingFrameRect.size.height;
+    
+    glViewport(0, 0, vpw, vph);
 //    NSLog(NSStringFromRect(self.bounds));
 //    NSLog(NSStringFromRect(backingFrameRect));
     
@@ -116,6 +105,8 @@
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"BackgroundColor"]];
+    glClearColor(color.redComponent, color.greenComponent, color.blueComponent, color.alphaComponent);
     glClear(GL_COLOR_BUFFER_BIT);
 
 //    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -195,16 +186,31 @@
     // Give an empty image to OpenGL
     int bufLength = w * h * 4;
     unsigned char *buf = malloc(bufLength);
-    if (self.pixelData.length > bufLength) {
+    if (self.pixelData.length >= bufLength) {
         memcpy(buf, self.pixelData.bytes, bufLength);
     } else {
-        memset(buf, 0, bufLength);
+        
+        
+        NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"BackgroundColor"]];
+        unsigned char val[4];
+        val[0] = color.redComponent * 255;
+        val[1] = color.greenComponent * 255;
+        val[2] = color.blueComponent * 255;
+        val[3] = color.alphaComponent * 255;
+        
+        memset_pattern4(buf, &val,bufLength);
+        
         memcpy(buf, self.pixelData.bytes, self.pixelData.length);
     }
     
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,GL_RGBA, GL_UNSIGNED_BYTE, buf);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseAntialiasing"]) {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    } else {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    }
     
     [[NSData dataWithBytes:buf length:bufLength] writeToFile:@"/Users/sveinbjorn/Desktop/tex.data" atomically:NO];
     free(buf);

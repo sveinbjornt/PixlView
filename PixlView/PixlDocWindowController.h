@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "GLPixelView.h"
 #import "PixelBuffer.h"
-#import "PixelDocument.h"
+#import "PixlDoc.h"
 
-@class PixelDocument;
+@class PixlDoc;
 
-@interface PixelDocumentController : NSWindowController
+@interface PixlDocWindowController : NSWindowController
 {
     IBOutlet id fileMD5TextField;
     
@@ -36,6 +36,6 @@
         
     NSArray *resolutions;
 }
-@property (retain, nonatomic) PixelDocument *doc;
+@property (retain, nonatomic) PixlDoc *doc;
 
 @end

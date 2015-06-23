@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F4BECE311B348E4F005FAD6C"
-               BuildableName = "PixelViewer.app"
-               BlueprintName = "PixelViewer"
-               ReferencedContainer = "container:PixelViewer.xcodeproj">
+               BuildableName = "PixlView.app"
+               BlueprintName = "PixlView"
+               ReferencedContainer = "container:PixlView.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "F4BECE441B348E50005FAD6C"
                BuildableName = "PixelViewerTests.xctest"
                BlueprintName = "PixelViewerTests"
-               ReferencedContainer = "container:PixelViewer.xcodeproj">
+               ReferencedContainer = "container:PixlView.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "F4BECE441B348E50005FAD6C"
                BuildableName = "PixelViewerTests.xctest"
                BlueprintName = "PixelViewerTests"
-               ReferencedContainer = "container:PixelViewer.xcodeproj">
+               ReferencedContainer = "container:PixlView.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F4BECE311B348E4F005FAD6C"
-            BuildableName = "PixelViewer.app"
-            BlueprintName = "PixelViewer"
-            ReferencedContainer = "container:PixelViewer.xcodeproj">
+            BuildableName = "PixlView.app"
+            BlueprintName = "PixlView"
+            ReferencedContainer = "container:PixlView.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F4BECE311B348E4F005FAD6C"
-            BuildableName = "PixelViewer.app"
-            BlueprintName = "PixelViewer"
-            ReferencedContainer = "container:PixelViewer.xcodeproj">
+            BuildableName = "PixlView.app"
+            BlueprintName = "PixlView"
+            ReferencedContainer = "container:PixlView.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F4BECE311B348E4F005FAD6C"
-            BuildableName = "PixelViewer.app"
-            BlueprintName = "PixelViewer"
-            ReferencedContainer = "container:PixelViewer.xcodeproj">
+            BuildableName = "PixlView.app"
+            BlueprintName = "PixlView"
+            ReferencedContainer = "container:PixlView.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

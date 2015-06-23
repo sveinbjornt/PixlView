@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Sveinbjorn Thordarson. All rights reserved.
 //
 
-#import "PixelDocumentController.h"
+#import "PixlDocWindowController.h"
 
-@implementation PixelDocumentController
+@implementation PixlDocWindowController
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -25,7 +25,8 @@
                                     pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
                                           scale:scale];
     glView.autoresizingMask = NSViewNotSizable;
-    [glView setWantsBestResolutionOpenGLSurface:YES];
+    BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
+    [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
     [pixelScrollView setDocumentView:glView];
 
     // Offset can never be greater than file length
@@ -88,12 +89,13 @@
     [offsetSlider setIntValue:offset];
 
     if ([notification object] == offsetTextField) {
-        PixelDocument *doc = self.document;
+        PixlDoc *doc = self.document;
         doc.pixelBuffer.offset = offset;
         glView.pixelData = [doc.pixelBuffer toRGBA];
     }
 
     glView.frame = NSMakeRect(0, 0, width, height);
+    [glView createTexture];
     [glView setNeedsDisplay:YES];
     [self updateBufferInfoTextField];
 }
@@ -102,7 +104,7 @@
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
     
-    PixelDocument *doc = self.document;
+    PixlDoc *doc = self.document;
     int fileDataLength = [doc.pixelBuffer length];
     int bufferSize = [doc.pixelBuffer expectedBitLengthForImageSize:NSMakeSize(width, height)] / 8;
     
@@ -132,6 +134,11 @@
     [bufferInfoTextField setAttributedStringValue:finalStr];
 }
 
+- (IBAction)scaleActualSizeButtonPressed:(id)sender {
+    [scaleSlider setIntValue:100/5];
+    [self scaleSliderValueChanged:nil];
+}
+
 
 #pragma mark - Slider actions
 
@@ -146,7 +153,10 @@
 
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
+    
     glView.frame = NSMakeRect(0, 0, width, height);
+    
+
     [glView setNeedsDisplay:YES];
 }
 
@@ -162,7 +172,7 @@
 
 - (IBAction)offsetSliderValueChanged:(id)sender {
     [offsetTextField setStringValue:[NSString stringWithFormat:@"%d", [sender intValue]]];
-    PixelDocument *doc = self.document;
+    PixlDoc *doc = self.document;
     doc.pixelBuffer.offset = [sender intValue];
     glView.pixelData = [doc.pixelBuffer toRGBA];
     [glView setNeedsDisplay:YES];
@@ -229,6 +239,8 @@
 
 - (NSDictionary *)bestPreset {
     NSArray *matches = [self matchingResolutionPresets];
+    //PixelFormat fmt = [PixelBuffer pixelFormatForSuffix:[self.doc.filePath pathExtension]];
+    
     if ([matches count]) {
         return [matches objectAtIndex:0];
     }
@@ -254,6 +266,10 @@
 }
 
 #pragma mark - File
+
+- (IBAction)export:(id)sender {
+    
+}
 
 - (NSString *)md5hashForFileAtPath:(NSString *)path
 {
@@ -303,17 +319,21 @@
 
         NSColor *resColor = [NSColor clearColor];
         NSString *title = menuItem.title;
+        NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
 
+        
         // Check if match
         PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
         if ((NSUInteger)pixFmt != -1) {
             resColor = [NSColor greenColor];
             NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
             title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
+            font = [NSFont boldSystemFontOfSize: [NSFont systemFontSize]];
         }
+        
         NSDictionary *textAttr = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  resColor, NSBackgroundColorAttributeName,
-                                  [NSFont systemFontOfSize: [NSFont systemFontSize]], NSFontAttributeName, nil];
+//                                  resColor, NSBackgroundColorAttributeName,
+                                  font, NSFontAttributeName, nil];
 
 
         NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:title attributes:textAttr];

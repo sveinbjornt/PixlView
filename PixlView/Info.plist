@@ -29,7 +29,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>NSDocumentClass</key>
-			<string>PixelDocument</string>
+			<string>PixlDoc</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -37,7 +37,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>org.sveinbjorn.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>org.sveinbjornt.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
