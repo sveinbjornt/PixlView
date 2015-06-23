@@ -86,6 +86,12 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="New Random Buffer" id="0i3-Z8-mWI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="newRandomBuffer:" target="Voe-Tx-rLC" id="TkH-S4-Bf8"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>

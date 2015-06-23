@@ -29,4 +29,21 @@
     return NO;
 }
 
+//- (BOOL)application:(NSApplication *)theApplication
+//           openFile:(NSString *)filename {
+//    return YES;
+//}
+
+- (IBAction)newRandomBuffer:(id)sender {
+    int length = 1228800;
+    
+    void *d = malloc(length);
+    arc4random_buf(d, length);
+    [[NSData dataWithBytes:d length:length] writeToFile:@"/tmp/random.data" atomically:NO];
+    free(d);
+    NSString *appPath = [[[NSBundle mainBundle] bundleURL] path];
+    [[NSWorkspace sharedWorkspace] openFile:@"/tmp/random.data" withApplication:appPath];
+//    [[NSApplication sharedApplication] ]
+}
+
 @end
