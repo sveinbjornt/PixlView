@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol GLPixelViewDelegate <NSObject>
+- (void)glPixelViewDoubleClicked:(NSEvent *)event;
+@end
+
 @interface GLPixelView : NSOpenGLView
 {
     GLuint framebuffer;
@@ -15,6 +19,7 @@
 }
 @property (retain, nonatomic) NSData *pixelData;
 @property CGFloat scale;
+@property id delegate;
 
 - (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale;
 - (void)refresh;

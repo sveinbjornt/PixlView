@@ -220,7 +220,7 @@
                     <button verticalHuggingPriority="750" id="xBB-3D-eZ2">
                         <rect key="frame" x="506" y="449" width="121" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Best fit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dah-Db-dah">
+                        <buttonCell key="cell" type="push" title="Best fit ↺" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dah-Db-dah">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -248,7 +248,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
                         <connections>
-                            <action selector="scaleActualSizeButtonPressed:" target="-2" id="iH0-Sc-v08"/>
+                            <action selector="scaleToActualSize:" target="-2" id="UBY-JT-Zhi"/>
                         </connections>
                     </button>
                 </subviews>

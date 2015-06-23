@@ -13,7 +13,7 @@
 
 @class PixlDoc;
 
-@interface PixlDocWindowController : NSWindowController
+@interface PixlDocWindowController : NSWindowController <GLPixelViewDelegate>
 {
     IBOutlet id fileMD5TextField;
     
@@ -35,6 +35,7 @@
     GLPixelView *glView;
         
     NSArray *resolutions;
+    int presetIndex;
 }
 @property (retain, nonatomic) PixlDoc *doc;
 

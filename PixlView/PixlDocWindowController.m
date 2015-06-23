@@ -14,6 +14,7 @@
     [super windowDidLoad];
     
     self.doc = self.document;
+    presetIndex = -1;
 
     // Create GL view and add to scroll view
     int width = [[widthTextField stringValue] intValue];
@@ -25,6 +26,7 @@
                                     pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
                                           scale:scale];
     glView.autoresizingMask = NSViewNotSizable;
+    glView.delegate = self;
     BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
     [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
     [pixelScrollView setDocumentView:glView];
@@ -134,7 +136,7 @@
     [bufferInfoTextField setAttributedStringValue:finalStr];
 }
 
-- (IBAction)scaleActualSizeButtonPressed:(id)sender {
+- (IBAction)scaleToActualSize:(id)sender {
     [scaleSlider setIntValue:100/5];
     [self scaleSliderValueChanged:nil];
 }
@@ -217,9 +219,22 @@
 #pragma mark - Presets
 
 - (IBAction)bestFitButtonPressed:(id)sender {
-    if ([self loadBestPreset] == NO) {
-        NSBeep();
+    
+    
+    if (presetIndex == -1) {
+        if ([self loadBestPreset] == NO) {
+            NSBeep();
+            return;
+        }
     }
+    NSArray *matches = [self matchingResolutionPresets];
+    if (presetIndex >= [matches count]-1 || presetIndex == -1) {
+        presetIndex = 0;
+    } else {
+        presetIndex++;
+    }
+    [self loadPreset:[matches objectAtIndex:presetIndex]];
+    
 }
 
 - (BOOL)loadBestPreset {
@@ -264,6 +279,13 @@
     
     [presetPopupButton selectItemAtIndex:[resolutions indexOfObject:res]];
 }
+
+#pragma mark - GLPixelViewDelegate
+
+- (void)glPixelViewDoubleClicked:(NSEvent *)event {
+    [self scaleToActualSize:self];
+}
+
 
 #pragma mark - File
 

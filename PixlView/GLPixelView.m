@@ -190,8 +190,11 @@
         memcpy(buf, self.pixelData.bytes, bufLength);
     } else {
         
-        
-        NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"BackgroundColor"]];
+        NSColor *color = [NSColor blackColor];
+        id archivedColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"BackgroundColor"];
+        if (archivedColor) {
+            color = [NSUnarchiver unarchiveObjectWithData:archivedColor];
+        }
         unsigned char val[4];
         val[0] = color.redComponent * 255;
         val[1] = color.greenComponent * 255;
@@ -263,6 +266,20 @@
 //    }
 //}
 
+#pragma mark - Event handling
+
+- (void)mouseUp:(NSEvent*)event
+{
+    if (!self.delegate) {
+        return;
+    }
+    
+    NSInteger clickCount = [event clickCount];
+    if (2 == clickCount) {
+        [self.delegate glPixelViewDoubleClicked:event];
+    }
+}
+
 
 #pragma mark -
 
@@ -270,18 +287,6 @@
 {
     return YES;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
