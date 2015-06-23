@@ -1,0 +1,9 @@
+
+Ideas for further development:
+
+    * Safe GL usage
+    * CLI parameters for interpreting data file. Integrate into debug process. Pretty cool, eh?
+    * Alternate drawing implementations
+    * Support for more pixel formats (more planar etc.)
+    * Best fit should iterate over the various fitting formats
+    * Preset popup should show -- when current res fits no preset

@@ -54,7 +54,7 @@
 		F4BECE291B348E4F005FAD6C = {
 			isa = PBXGroup;
 			children = (
-				F4BECE341B348E4F005FAD6C /* PixlView App */,
+				F4BECE341B348E4F005FAD6C /* PixlView */,
 				F4BECE331B348E4F005FAD6C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F4BECE341B348E4F005FAD6C /* PixlView App */ = {
+		F4BECE341B348E4F005FAD6C /* PixlView */ = {
 			isa = PBXGroup;
 			children = (
 				F4BECE391B348E4F005FAD6C /* AppDelegate.h */,
@@ -82,7 +82,6 @@
 				F4BECE5C1B35B541005FAD6C /* GLPixelView.m */,
 				F4BECE351B348E4F005FAD6C /* Resources */,
 			);
-			name = "PixlView App";
 			path = PixlView;
 			sourceTree = "<group>";
 		};
@@ -285,6 +284,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PixlView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PixlView;
 			};
 			name = Debug;
@@ -296,6 +296,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PixlView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PixlView;
 			};
 			name = Release;
