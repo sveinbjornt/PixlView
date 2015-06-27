@@ -14,6 +14,7 @@
 		F46AB9681B375BD800CEB288 /* PixlDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = F46AB9671B375BD800CEB288 /* PixlDoc.m */; };
 		F46AB96B1B375BED00CEB288 /* PixlDoc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46AB9691B375BED00CEB288 /* PixlDoc.xib */; };
 		F46AB96E1B375DB300CEB288 /* PixlDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46AB96D1B375DB300CEB288 /* PixlDocWindowController.m */; };
+		F4B87C4D1B3EE62300F4B8BE /* PixlViewIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F4B87C4B1B3EE61800F4B8BE /* PixlViewIcon.icns */; };
 		F4BECE381B348E4F005FAD6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE371B348E4F005FAD6C /* main.m */; };
 		F4BECE3B1B348E4F005FAD6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BECE3A1B348E4F005FAD6C /* AppDelegate.m */; };
 		F4BECE3D1B348E4F005FAD6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECE3C1B348E4F005FAD6C /* Images.xcassets */; };
@@ -35,6 +36,10 @@
 		F46AB96A1B375BED00CEB288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PixlDoc.xib; sourceTree = "<group>"; };
 		F46AB96C1B375DB300CEB288 /* PixlDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixlDocWindowController.h; sourceTree = "<group>"; };
 		F46AB96D1B375DB300CEB288 /* PixlDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixlDocWindowController.m; sourceTree = "<group>"; };
+		F4B87C491B3EE61800F4B8BE /* PixlViewerIcon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = PixlViewerIcon.iconset; path = icon/PixlViewerIcon.iconset; sourceTree = "<group>"; };
+		F4B87C4A1B3EE61800F4B8BE /* PixlViewIcon.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = PixlViewIcon.ai; path = icon/PixlViewIcon.ai; sourceTree = "<group>"; };
+		F4B87C4B1B3EE61800F4B8BE /* PixlViewIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = PixlViewIcon.icns; path = icon/PixlViewIcon.icns; sourceTree = "<group>"; };
+		F4B87C4C1B3EE61800F4B8BE /* PixlViewIcon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = PixlViewIcon.psd; path = icon/PixlViewIcon.psd; sourceTree = "<group>"; };
 		F4BECE321B348E4F005FAD6C /* PixlView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixlView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BECE361B348E4F005FAD6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4BECE371B348E4F005FAD6C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,10 +68,22 @@
 			isa = PBXGroup;
 			children = (
 				F40068661B3A0AAA00961B42 /* small-zoom-cursor.png */,
+				F4B87C481B3EE60D00F4B8BE /* Icon */,
 				F40068671B3A0AAA00961B42 /* small-zoom-in-cursor.png */,
 				F4BECE3C1B348E4F005FAD6C /* Images.xcassets */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		F4B87C481B3EE60D00F4B8BE /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				F4B87C491B3EE61800F4B8BE /* PixlViewerIcon.iconset */,
+				F4B87C4A1B3EE61800F4B8BE /* PixlViewIcon.ai */,
+				F4B87C4B1B3EE61800F4B8BE /* PixlViewIcon.icns */,
+				F4B87C4C1B3EE61800F4B8BE /* PixlViewIcon.psd */,
+			);
+			name = Icon;
 			sourceTree = "<group>";
 		};
 		F4BECE291B348E4F005FAD6C = {
@@ -181,6 +198,7 @@
 				F4BECE401B348E4F005FAD6C /* MainMenu.xib in Resources */,
 				F40068681B3A0AAA00961B42 /* small-zoom-cursor.png in Resources */,
 				F46AB9361B3738AB00CEB288 /* resolutions.plist in Resources */,
+				F4B87C4D1B3EE62300F4B8BE /* PixlViewIcon.icns in Resources */,
 				F40068691B3A0AAA00961B42 /* small-zoom-in-cursor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,8 @@
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
                     hasVisibleWindows:(BOOL)flag {
+    
+    //[[NSDocumentController sharedDocumentController] openDocument:self];
     return NO;
 }
 
