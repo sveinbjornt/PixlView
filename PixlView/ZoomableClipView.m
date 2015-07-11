@@ -15,7 +15,7 @@
 {
     NSImage *image = [NSImage imageNamed:@"small-zoom-in-cursor.png"];
 
-    unsigned int currentFlags = [[[NSApplication sharedApplication] currentEvent] modifierFlags];
+    NSUInteger currentFlags = [[[NSApplication sharedApplication] currentEvent] modifierFlags];
     
     if (currentFlags & NSShiftKeyMask) {
         image = [NSImage imageNamed:@"small-zoom-cursor.png"];
@@ -35,6 +35,5 @@
 - (BOOL)acceptsFirstResponder {
     return TRUE;
 }
-
 
 @end

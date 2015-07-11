@@ -7,6 +7,7 @@
 //
 
 #import "PixlDocWindowController.h"
+#import "ZoomableClipView.h"
 
 @implementation PixlDocWindowController
 
@@ -55,15 +56,30 @@
     int width = [[widthTextField stringValue] intValue];
     int height = [[heightTextField stringValue] intValue];
     CGFloat scale = 1.0f;
-    NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = { 0 };
+    
+    NSOpenGLPixelFormatAttribute attrs[] =
+    {
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFAColorSize, (NSOpenGLPixelFormatAttribute)24,
+        NSOpenGLPFAAlphaSize, (NSOpenGLPixelFormatAttribute)0,//8
+        NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)0,//16
+        NSOpenGLPFAClosestPolicy,
+        NSOpenGLPFAAllowOfflineRenderers,
+        NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersionLegacy,
+//        NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core, // !!!
+        0
+    };
+    
     NSRect glFrame = NSMakeRect(0, 0, width, height);
     glView = [[GLPixelView alloc] initWithFrame:glFrame
-                                    pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes]
+                                    pixelFormat:[[NSOpenGLPixelFormat alloc] initWithAttributes:attrs]
                                           scale:scale];
-    glView.autoresizingMask = NSViewNotSizable;
+//    glView.autoresizingMask = NSViewNotSizable;
     glView.delegate = self;
-    BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
-    [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
+    glView.wantsLayer = YES;
+//    BOOL useRetinaBacking = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseRetinaBacking"];
+//    [glView setWantsBestResolutionOpenGLSurface:useRetinaBacking];
+    
     [pixelScrollView setDocumentView:glView];
 }
 
