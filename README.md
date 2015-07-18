@@ -3,7 +3,7 @@
 PixlView is a native raw pixel data viewer for Mac OS X. Raw pixel data can be interpreted and displayed in pixel formats such as RGBA, RGB24, RGB8 and YUV420p.  Pixel buffers can also be exported to various formats. Uses OpenGL for rendering. Runs on Mac OS X 10.8 or later. Source is distributed under the BSD license.
 
 
-<a href="https://raw.githubusercontent.com/sveinbjornt/PixlView/master/binaries/PixlView.zip">*Download Application*</a> (built 18/07/2015)
+<a href="https://raw.githubusercontent.com/sveinbjornt/PixlView/master/binaries/PixlView.zip">**Download Application**</a> (built 18/07/2015)
 
 
 ## Screenshots
