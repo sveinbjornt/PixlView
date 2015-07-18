@@ -1,4 +1,4 @@
-<img align="right" src="https://raw.githubusercontent.com/sveinbjornt/PixlView/master/screenshots/appicon.jpg">
+<img align="right" src="https://raw.githubusercontent.com/sveinbjornt/PixlView/master/screenshots/appicon.jpg" width="128" height="128">
 
 # PixlView
 
