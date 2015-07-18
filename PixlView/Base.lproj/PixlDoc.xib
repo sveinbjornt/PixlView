@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PixlDocWindowController">
             <connections>
                 <outlet property="bufferInfoTextField" destination="J7I-9a-Ljv" id="NUg-yw-z3M"/>
+                <outlet property="exportFileTypePopupButton" destination="vxs-Dm-0Aj" id="KSS-TT-hOv"/>
                 <outlet property="fileMD5TextField" destination="4Tq-qc-hEZ" id="uMO-ea-AYQ"/>
                 <outlet property="formatPopupButton" destination="UGp-ha-ZQr" id="t0R-hk-JQ0"/>
                 <outlet property="heightSlider" destination="Np7-DE-89e" id="v1q-7U-NL3"/>
@@ -255,5 +256,35 @@
             </view>
             <point key="canvasLocation" x="621" y="369"/>
         </window>
+        <view id="zZn-sP-qZl">
+            <rect key="frame" x="0.0" y="0.0" width="468" height="62"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <popUpButton verticalHuggingPriority="750" id="vxs-Dm-0Aj">
+                    <rect key="frame" x="148" y="18" width="174" height="26"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Mvc-44-p8H">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="DT6-wa-Ftu">
+                            <items>
+                                <menuItem title="PNG" id="05S-pP-2cu"/>
+                                <menuItem title="JPEG" id="eem-kg-zvO"/>
+                                <menuItem title="TIFF" id="toY-gk-03B"/>
+                                <menuItem title="BMP" id="hTg-8I-DsW"/>
+                                <menuItem title="JPEG2000" id="pOf-7l-z2V"/>
+                                <menuItem title="RGB24" id="wrZ-cH-UEV"/>
+                                <menuItem title="RGBA" id="7wh-Mh-Xqt"/>
+                                <menuItem title="YUV420P " id="bQ7-xc-m2U"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="dropMenuChange:" target="-2" id="y5j-Ns-hgq"/>
+                    </connections>
+                </popUpButton>
+            </subviews>
+            <point key="canvasLocation" x="552" y="306"/>
+        </view>
     </objects>
 </document>

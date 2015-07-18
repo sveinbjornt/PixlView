@@ -30,6 +30,7 @@
 		F40068671B3A0AAA00961B42 /* small-zoom-in-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "small-zoom-in-cursor.png"; path = "../../pixlview/PixlView/images/small-zoom-in-cursor.png"; sourceTree = "<group>"; };
 		F400686B1B3A0CB900961B42 /* ZoomableClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZoomableClipView.h; path = ../../pixlview/PixlView/ZoomableClipView.h; sourceTree = "<group>"; };
 		F400686C1B3A0CB900961B42 /* ZoomableClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZoomableClipView.m; path = ../../pixlview/PixlView/ZoomableClipView.m; sourceTree = "<group>"; };
+		F41E40721B5AA76A006D6160 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F46AB9351B3738AB00CEB288 /* resolutions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = resolutions.plist; sourceTree = "<group>"; };
 		F46AB9661B375BD800CEB288 /* PixlDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixlDoc.h; sourceTree = "<group>"; };
 		F46AB9671B375BD800CEB288 /* PixlDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixlDoc.m; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		F4BECE291B348E4F005FAD6C = {
 			isa = PBXGroup;
 			children = (
+				F41E40721B5AA76A006D6160 /* README.md */,
 				F40068651B3A049800961B42 /* IDEAS.txt */,
 				F4BECE341B348E4F005FAD6C /* PixlView */,
 				F4BECE331B348E4F005FAD6C /* Products */,

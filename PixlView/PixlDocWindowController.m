@@ -302,11 +302,9 @@
 - (void)glPixelViewDoubleClicked:(NSEvent *)event {
     //[self scaleToActualSize:self];
     [self increaseScale:self];
-    [self increaseScale:self];
 }
 
 - (void)glPixelViewClicked:(NSEvent *)event {
-    [self increaseScale:self];
     [self increaseScale:self];
 }
 
@@ -315,10 +313,80 @@
 
 - (IBAction)export:(id)sender {
     
+    // Create save panel and add our custom accessory view
+    NSSavePanel *sPanel = [NSSavePanel savePanel];
+    [sPanel setPrompt:@"Create"];
+    [sPanel setAccessoryView:exportFileTypePopupButton];
+    [sPanel setNameFieldStringValue:@"file.png"];
+    
+    NSDictionary *itemName2fileTypeMap = @{
+                                           @"TIFF": @(NSTIFFFileType),
+                                           @"BMP": @(NSBMPFileType),
+                                           @"GIF": @(NSGIFFileType),
+                                           @"JPEG": @(NSJPEGFileType),
+                                           @"PNG": @(NSPNGFileType),
+                                           @"JPEG2000": @(NSJPEG2000FileType)
+                                           };
+    
+    //run save panel
+    [sPanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+        if (result != NSOKButton) {
+            return;
+        }
+        NSString *path = [[sPanel URL] path];
+        NSBitmapImageFileType type = [itemName2fileTypeMap[[exportFileTypePopupButton titleOfSelectedItem]] intValue];
+        [self writeGLImageToPath:path asFileType:type];
+    }];
 }
 
-- (NSString *)md5hashForFileAtPath:(NSString *)path
-{
+- (IBAction)dropMenuChange:(NSPopUpButton *)sender {
+    
+    NSDictionary *itemName2fsuffixMap = @{
+                                           @"TIFF": @"tiff",
+                                           @"BMP": @"bmp",
+                                           @"GIF": @"gif",
+                                           @"JPEG": @"jpg",
+                                           @"PNG": @"png",
+                                           @"JPEG2000": @"jp2",
+                                           @"RGB24": @"rgb",
+                                           @"RGBA": @"rgba",
+                                           @"YUV420P": @"yuv420p"
+                                           };
+
+    
+    NSSavePanel *savePanel = (NSSavePanel *)[sender window];
+    NSString *nameFieldString = [savePanel nameFieldStringValue];
+    NSString *selectedTitle = [exportFileTypePopupButton titleOfSelectedItem];
+    NSString *nameFieldStringWithExt = [NSString stringWithFormat:@"%@.%@",[[savePanel nameFieldStringValue] stringByDeletingPathExtension], itemName2fsuffixMap[selectedTitle]];
+    [savePanel setNameFieldStringValue:nameFieldStringWithExt];
+}
+//
+//- (NSString *)changeSuffixToItemName:(NSString *)itemName {
+//}
+
+- (void)writeGLImageToPath:(NSString *)path asFileType:(NSBitmapImageFileType)fileType {
+    unsigned char *buf = [glView readGLBuffer];
+    NSBitmapImageRep *imageRep;
+    imageRep =  [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&buf
+                                                        pixelsWide:glView.frame.size.width
+                                                        pixelsHigh:glView.frame.size.height
+                                                     bitsPerSample:8
+                                                   samplesPerPixel:4
+                                                          hasAlpha:YES
+                                                          isPlanar:NO
+                                                    colorSpaceName:NSDeviceRGBColorSpace
+                                                       bytesPerRow:glView.frame.size.width*4
+                                                      bitsPerPixel:32];
+    NSData *data = [imageRep representationUsingType:fileType properties:nil];
+    [data writeToFile:path atomically: NO];
+    
+    free(buf);
+    
+    
+}
+
+
+- (NSString *)md5hashForFileAtPath:(NSString *)path {
     BOOL isDir;
 
     //make sure it exists and isn't folder

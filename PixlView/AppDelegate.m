@@ -37,15 +37,22 @@
 //}
 
 - (IBAction)newRandomBuffer:(id)sender {
-    int length = 1228800;
+    // prepare filename
+    NSString *appPath = [[[NSBundle mainBundle] bundleURL] path];
+    NSString *filename = @"/tmp/random.data";
+    while ([[NSFileManager defaultManager] fileExistsAtPath:filename]) {
+        filename = [NSString stringWithFormat:@"/tmp/random%d.data", arc4random()];
+    }
     
+    // write
+    int length = 1228800;
     void *d = malloc(length);
     arc4random_buf(d, length);
-    [[NSData dataWithBytes:d length:length] writeToFile:@"/tmp/random.data" atomically:NO];
+    [[NSData dataWithBytes:d length:length] writeToFile:filename atomically:NO];
     free(d);
-    NSString *appPath = [[[NSBundle mainBundle] bundleURL] path];
-    [[NSWorkspace sharedWorkspace] openFile:@"/tmp/random.data" withApplication:appPath];
-//    [[NSApplication sharedApplication] ]
+
+    // open
+    [[NSWorkspace sharedWorkspace] openFile:filename withApplication:appPath];
 }
 
 @end

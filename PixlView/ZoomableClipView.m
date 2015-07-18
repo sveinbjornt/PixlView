@@ -10,30 +10,30 @@
 
 @implementation ZoomableClipView
 
-
--(void)resetCursorRects
-{
-    NSImage *image = [NSImage imageNamed:@"small-zoom-in-cursor.png"];
-
-    NSUInteger currentFlags = [[[NSApplication sharedApplication] currentEvent] modifierFlags];
-    
-    if (currentFlags & NSShiftKeyMask) {
-        image = [NSImage imageNamed:@"small-zoom-cursor.png"];
-    }
-
-    NSCursor *cursor = [[NSCursor alloc] initWithImage:image hotSpot:NSZeroPoint];
-    
-    [self addCursorRect:[self bounds] cursor:cursor];
-}
-
-- (void)flagsChanged:(NSEvent *)theEvent {
-    if (([theEvent modifierFlags] & NSShiftKeyMask) == NSAlternateKeyMask) {
-        [self.window resetCursorRects];
-    }
-}
-
-- (BOOL)acceptsFirstResponder {
-    return TRUE;
-}
+//
+//-(void)resetCursorRects
+//{
+//    NSImage *image = [NSImage imageNamed:@"small-zoom-in-cursor.png"];
+//
+//    NSUInteger currentFlags = [[[NSApplication sharedApplication] currentEvent] modifierFlags];
+//    
+//    if (currentFlags & NSShiftKeyMask) {
+//        image = [NSImage imageNamed:@"small-zoom-cursor.png"];
+//    }
+//
+//    NSCursor *cursor = [[NSCursor alloc] initWithImage:image hotSpot:NSZeroPoint];
+//    
+//    [self addCursorRect:[self bounds] cursor:cursor];
+//}
+//
+//- (void)flagsChanged:(NSEvent *)theEvent {
+//    if (([theEvent modifierFlags] & NSShiftKeyMask) == NSAlternateKeyMask) {
+//        [self.window resetCursorRects];
+//    }
+//}
+//
+//- (BOOL)acceptsFirstResponder {
+//    return TRUE;
+//}
 
 @end

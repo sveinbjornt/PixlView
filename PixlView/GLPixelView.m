@@ -35,6 +35,15 @@
 
 #pragma mark -
 
+- (void *)readGLBuffer {
+    [[self openGLContext] makeCurrentContext];
+    
+    void *buf = malloc(self.frame.size.width * self.frame.size.height * 4);
+    glReadPixels(0, 0, self.frame.size.width, self.frame.size.height, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+    
+    return buf;
+}
+
 - (void)setPixelData:(NSData *)pixelData {
     _pixelData = pixelData;
     [self createTexture];
@@ -50,6 +59,7 @@
 #pragma mark -
 
 - (void)reshape {
+//    [[self openGLContext] makeCurrentContext];
 //    [[self openGLContext] update];
 
 //    [[self openGLContext] makeCurrentContext];

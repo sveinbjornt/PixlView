@@ -16,7 +16,8 @@
 				<string>rgb8</string>
 				<string>rgb24</string>
 				<string>yuv420</string>
-				<string>yuv422</string>
+				<string>yuv420p</string>
+				<string>yuv422p</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>

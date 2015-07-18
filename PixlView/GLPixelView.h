@@ -25,5 +25,6 @@
 - (instancetype)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)format scale:(CGFloat)scale;
 - (void)refresh;
 - (void)createTexture;
+- (void *)readGLBuffer;
 
 @end

@@ -31,6 +31,7 @@
     IBOutlet id offsetSlider;
     
     IBOutlet id pixelScrollView;
+    IBOutlet id exportFileTypePopupButton;
     
     GLPixelView *glView;
         
