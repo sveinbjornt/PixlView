@@ -189,6 +189,7 @@
     PixlDoc *doc = self.document;
     doc.pixelBuffer.offset = [sender intValue];
     glView.pixelData = [doc.pixelBuffer toRGBA];
+    [glView createTexture];
     [glView setNeedsDisplay:YES];
     [self updateBufferInfoTextField];
 }
