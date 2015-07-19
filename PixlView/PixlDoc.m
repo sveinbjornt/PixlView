@@ -35,7 +35,7 @@
     self.filePath = [url path];
     self.pixelBuffer = [[PixelBuffer alloc] initWithContentsOfFile:self.filePath];
     
-    return YES;
+    return self.pixelBuffer != nil;
 }
 
 @end

@@ -85,7 +85,6 @@
 
 #pragma mark - Control delegate
 
-
 - (IBAction)pixelFormatChanged:(id)sender {
     self.doc.pixelBuffer.pixelFormat = [formatPopupButton indexOfSelectedItem];
     glView.pixelData = [self.doc.pixelBuffer toRGBA];
@@ -145,10 +144,8 @@
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:msg];
     [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,string.length)];
     
-    
     NSMutableAttributedString *finalStr = [[NSMutableAttributedString alloc] initWithString:bufferInfoString attributes:nil];
     [finalStr appendAttributedString:string];
-    
     
     [bufferInfoTextField setAttributedStringValue:finalStr];
 }
@@ -157,7 +154,6 @@
     [scaleSlider setIntValue:100/5];
     [self scaleSliderValueChanged:nil];
 }
-
 
 #pragma mark - Slider actions
 
@@ -175,7 +171,6 @@
     
     glView.frame = NSMakeRect(0, 0, width, height);
     
-
     [glView setNeedsDisplay:YES];
 }
 
@@ -230,7 +225,6 @@
 - (IBAction)increaseHeight:(id)sender {
     [heightTextField setStringValue:[NSString stringWithFormat:@"%d", [[heightTextField stringValue] intValue]+1]];
     [self controlTextDidChange:nil];
-
 }
 
 #pragma mark - Presets
@@ -300,14 +294,12 @@
 #pragma mark - GLPixelViewDelegate
 
 - (void)glPixelViewDoubleClicked:(NSEvent *)event {
-    //[self scaleToActualSize:self];
     [self increaseScale:self];
 }
 
 - (void)glPixelViewClicked:(NSEvent *)event {
     [self increaseScale:self];
 }
-
 
 #pragma mark - File
 
@@ -360,9 +352,6 @@
     NSString *nameFieldStringWithExt = [NSString stringWithFormat:@"%@.%@",[[savePanel nameFieldStringValue] stringByDeletingPathExtension], itemName2fsuffixMap[selectedTitle]];
     [savePanel setNameFieldStringValue:nameFieldStringWithExt];
 }
-//
-//- (NSString *)changeSuffixToItemName:(NSString *)itemName {
-//}
 
 - (void)writeGLImageToPath:(NSString *)path asFileType:(NSBitmapImageFileType)fileType {
     unsigned char *buf = [glView readGLBuffer];
@@ -381,10 +370,7 @@
     [data writeToFile:path atomically: NO];
     
     free(buf);
-    
-    
 }
-
 
 - (NSString *)md5hashForFileAtPath:(NSString *)path {
     BOOL isDir;
@@ -422,8 +408,6 @@
         NSString *presetName = [NSString stringWithFormat:@"%d x %d", w, h];
         [presetPopupButton addItemWithTitle:presetName];
     }
-
-
 
     NSArray *menuItems = [presetPopupButton itemArray];
     for (NSMenuItem *menuItem in menuItems) {
@@ -526,6 +510,5 @@
     NSString *resFilePath = [[NSBundle mainBundle] pathForResource:@"resolutions" ofType:@"plist"];
     resolutions = [NSArray arrayWithContentsOfFile:resFilePath];
 }
-
 
 @end

@@ -28,7 +28,6 @@
     glDisable(GL_POINT_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
     glEnable(GL_BLEND);
-    [self createTexture];
 }
 
 #pragma mark -
@@ -44,7 +43,7 @@
 
 - (void)setPixelData:(NSData *)pixelData {
     _pixelData = pixelData;
-    [self createTexture];
+    //[self createTexture];
 }
 
 - (void)setFrame:(NSRect)frameRect {
@@ -56,21 +55,7 @@
 #pragma mark -
 
 - (void)reshape {
-//    [[self openGLContext] makeCurrentContext];
-//    [[self openGLContext] update];
 
-//    [[self openGLContext] makeCurrentContext];
-//    
-//    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
-//    
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    
-//    // Use OS X style coordinates, 0,0 is bottom left
-//    glOrtho(0, self.frame.size.width, self.frame.size.height, 0 , 0, 1);
-//    
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
 }
 
 - (void)refresh {
@@ -195,8 +180,6 @@
     free(buf);
     
     NSLog(@"Created texture %.1f x %.1f", self.frame.size.width, self.frame.size.height);
-
-    
 }
 
 #pragma mark - Event handling

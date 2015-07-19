@@ -83,7 +83,10 @@
         rgbIndex += 3;
     }
     
-    return [NSData dataWithBytes:rgbaBuffer length:rgbaBufferLength];
+    NSData *d = [NSData dataWithBytes:rgbaBuffer length:rgbaBufferLength];
+    free(rgbaBuffer);
+    
+    return d;
 }
 
 - (NSData *)rgb8_2_rgba  {
@@ -108,8 +111,10 @@
     }
     
     
-    return [NSData dataWithBytes:rgbaBuffer length:rgbaBufferLength];
-
+    NSData *d = [NSData dataWithBytes:rgbaBuffer length:rgbaBufferLength];
+    free(rgbaBuffer);
+    
+    return d;
 }
 
 
