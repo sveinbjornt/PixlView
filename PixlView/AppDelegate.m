@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Sveinbjorn Thordarson. All rights reserved.
 //
 
+#import "Constants.h"
 #import "AppDelegate.h"
 #import "GLPixelView.h"
 #import "PixelBuffer.h"
@@ -45,7 +46,7 @@
     }
     
     // write
-    int length = 1228800;
+    int length = RANDOM_PIXEL_BUFFER_WIDTH * RANDOM_PIXEL_BUFFER_HEIGHT * 3;
     void *d = malloc(length);
     arc4random_buf(d, length);
     [[NSData dataWithBytes:d length:length] writeToFile:filename atomically:NO];

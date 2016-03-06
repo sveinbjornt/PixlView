@@ -350,7 +350,9 @@
     NSSavePanel *savePanel = (NSSavePanel *)[sender window];
     NSString *nameFieldString = [savePanel nameFieldStringValue];
     NSString *selectedTitle = [exportFileTypePopupButton titleOfSelectedItem];
-    NSString *nameFieldStringWithExt = [NSString stringWithFormat:@"%@.%@",[[savePanel nameFieldStringValue] stringByDeletingPathExtension], itemName2fsuffixMap[selectedTitle]];
+    NSString *nameFieldStringWithExt = [NSString stringWithFormat:@"%@.%@",
+                                        [nameFieldString stringByDeletingPathExtension],
+                                        itemName2fsuffixMap[selectedTitle]];
     [savePanel setNameFieldStringValue:nameFieldStringWithExt];
 }
 
@@ -416,7 +418,7 @@
         int index = (int)[presetPopupButton indexOfItem:menuItem];
         NSDictionary *resInfoDict = [resolutions objectAtIndex:index];
 
-        NSColor *resColor = [NSColor clearColor];
+//        NSColor *resColor = [NSColor clearColor];
         NSString *title = menuItem.title;
         NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
 
@@ -424,7 +426,7 @@
         // Check if match
         PixelFormat pixFmt = [self pixelFormatMatchingResolution:resInfoDict];
         if ((NSUInteger)pixFmt != -1) {
-            resColor = [NSColor greenColor];
+//            resColor = [NSColor greenColor];
             NSString *pixFmtStr = [[PixelBuffer supportedFormats] objectAtIndex:pixFmt];
             title = [NSString stringWithFormat:@"%@ (%@)", menuItem.title, pixFmtStr];
             font = [NSFont boldSystemFontOfSize: [NSFont systemFontSize]];

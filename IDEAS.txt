@@ -8,5 +8,4 @@ Ideas for further development:
     * Preset popup should show when current res fits no preset
     * Cursors to zoom in/out, option-click to zoom out
     * Exponential zoom using cursor
-    * Export buffer to image file
     * Support export to multiple formats

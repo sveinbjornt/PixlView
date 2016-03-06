@@ -43,7 +43,7 @@
 
 - (void)setPixelData:(NSData *)pixelData {
     _pixelData = pixelData;
-    //[self createTexture];
+    [self createTexture];
 }
 
 - (void)setFrame:(NSRect)frameRect {
